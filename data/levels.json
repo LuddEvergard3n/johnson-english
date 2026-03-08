@@ -1,0 +1,30 @@
+[
+  {
+    "id": "a1",
+    "label": "Beginner",
+    "cefr": "A1",
+    "description": "You can understand and use familiar everyday expressions and very basic phrases. You can introduce yourself and others and can ask and answer questions about personal details.",
+    "color": "#1e3a5f"
+  },
+  {
+    "id": "a2",
+    "label": "Elementary",
+    "cefr": "A2",
+    "description": "You can understand sentences and frequently used expressions related to areas of immediate relevance. You can communicate in simple and routine tasks.",
+    "color": "#2d6a4f"
+  },
+  {
+    "id": "b1",
+    "label": "Intermediate",
+    "cefr": "B1",
+    "description": "You can understand the main points of clear standard input on familiar matters. You can deal with most situations likely to arise while travelling in an English-speaking area.",
+    "color": "#5f2a1e"
+  },
+  {
+    "id": "b2",
+    "label": "Upper-Intermediate",
+    "cefr": "B2",
+    "description": "You can understand the main ideas of complex text on both concrete and abstract topics. You can interact with a degree of fluency and spontaneity that makes regular interaction with native speakers quite possible.",
+    "color": "#4a1a6b"
+  }
+]

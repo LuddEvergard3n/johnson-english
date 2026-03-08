@@ -1,0 +1,191 @@
+[
+  {
+    "id": "m01",
+    "levelId": "a1",
+    "order": 1,
+    "title": "Introducing Yourself",
+    "description": "Learn to say who you are, where you are from, and what you do. First conversations in English."
+  },
+  {
+    "id": "m02",
+    "levelId": "a1",
+    "order": 2,
+    "title": "Daily Routine",
+    "description": "Talk about everyday activities: waking up, eating, working, and sleeping."
+  },
+  {
+    "id": "m03",
+    "levelId": "a1",
+    "order": 3,
+    "title": "Food and Drinks",
+    "description": "Order food, describe what you like, and ask for things at a restaurant or café."
+  },
+  {
+    "id": "m04",
+    "levelId": "a1",
+    "order": 4,
+    "title": "Places in the City",
+    "description": "Ask for and give directions. Identify and name common urban locations."
+  },
+  {
+    "id": "m05",
+    "levelId": "a1",
+    "order": 5,
+    "title": "Time and Dates",
+    "description": "Tell the time, say the date, and talk about days of the week and months of the year."
+  },
+  {
+    "id": "m06",
+    "levelId": "a1",
+    "order": 6,
+    "title": "Pronunciation",
+    "description": "Sons do inglês que não existem no português. TH, vogais longas e curtas, ritmo da frase."
+  },
+  {
+    "id": "m07",
+    "levelId": "a2",
+    "order": 1,
+    "title": "Family and Relationships",
+    "description": "Descreva sua família, aparência física e personalidade. Compare pessoas e coisas."
+  },
+  {
+    "id": "m08",
+    "levelId": "a2",
+    "order": 2,
+    "title": "Shopping and Money",
+    "description": "Vocabulário de compras, preços e dinheiro. Comparativos, superlativos, too/enough."
+  },
+  {
+    "id": "m09",
+    "levelId": "a2",
+    "order": 3,
+    "title": "Travel and Transport",
+    "description": "Meios de transporte, aeroporto, hotel. Passado simples completo. Futuro com Will."
+  },
+  {
+    "id": "m10",
+    "levelId": "a2",
+    "order": 4,
+    "title": "Health and the Body",
+    "description": "Partes do corpo, sintomas e consulta médica. Must / Have To para obrigação."
+  },
+  {
+    "id": "m11",
+    "levelId": "a2",
+    "order": 5,
+    "title": "Work and Technology",
+    "description": "Presente contínuo, escritório, tecnologia. Contraste Simple vs Continuous."
+  },
+  {
+    "id": "m12",
+    "levelId": "a2",
+    "order": 6,
+    "title": "Hobbies and Free Time",
+    "description": "Hobbies, frequência, gerúndio. Sugestões, convites e narração de passado."
+  },
+  {
+    "id": "m13",
+    "levelId": "a2",
+    "order": 7,
+    "title": "Pronunciation A2",
+    "description": "Entonação de perguntas, redução de vogais, ligação entre palavras e ritmo natural."
+  },
+  {
+    "id": "m14",
+    "levelId": "b1",
+    "order": 1,
+    "title": "Experiences and the Past",
+    "description": "O Present Perfect para falar de experiências de vida. Contraste com o Past Simple."
+  },
+  {
+    "id": "m15",
+    "levelId": "b1",
+    "order": 2,
+    "title": "Stories and Memories",
+    "description": "Narração rica com Past Continuous e Past Simple. Como contar histórias em inglês."
+  },
+  {
+    "id": "m16",
+    "levelId": "b1",
+    "order": 3,
+    "title": "Plans and Possibilities",
+    "description": "Arranjos futuros, First Conditional e modais de possibilidade: might, may, could."
+  },
+  {
+    "id": "m17",
+    "levelId": "b1",
+    "order": 4,
+    "title": "The World Around Us",
+    "description": "Voz passiva e orações relativas. Vocabulário de sociedade, cultura e processos."
+  },
+  {
+    "id": "m18",
+    "levelId": "b1",
+    "order": 5,
+    "title": "How to Express Yourself",
+    "description": "Gerúndio vs infinitivo, discurso indireto e conectivos B1 para opinião e argumento."
+  },
+  {
+    "id": "m19",
+    "levelId": "b1",
+    "order": 6,
+    "title": "B1 Real Life",
+    "description": "Entrevista de emprego, viagem internacional, negociação e narração pessoal completa."
+  },
+  {
+    "id": "m20",
+    "levelId": "b1",
+    "order": 7,
+    "title": "Pronunciation B1",
+    "description": "Stress de palavra, stress de frase, assimilação e elisão na fala conectada natural."
+  },
+  {
+    "id": "m21",
+    "levelId": "b2",
+    "order": 1,
+    "title": "Perfect Tenses",
+    "description": "Present Perfect Continuous, Past Perfect e Past Perfect Continuous. Os tempos que conectam momentos no tempo com precisão."
+  },
+  {
+    "id": "m22",
+    "levelId": "b2",
+    "order": 2,
+    "title": "Hypothetical World",
+    "description": "Second e Third Conditional, Mixed Conditionals, wishes e regrets. Como falar do que poderia ter sido."
+  },
+  {
+    "id": "m23",
+    "levelId": "b2",
+    "order": 3,
+    "title": "Reporting and Voice",
+    "description": "Reported Speech completo, Passive Voice em todos os tempos e reporting verbs para discurso acadêmico e profissional."
+  },
+  {
+    "id": "m24",
+    "levelId": "b2",
+    "order": 4,
+    "title": "Future and Speculation",
+    "description": "Future Perfect, Future Continuous e modais avançados para especulação e expressão de certeza graduada."
+  },
+  {
+    "id": "m25",
+    "levelId": "b2",
+    "order": 5,
+    "title": "Argument and Discourse",
+    "description": "Discourse markers B2, argumentação estruturada, relative clauses avançadas e escrita de ensaio acadêmico."
+  },
+  {
+    "id": "m26",
+    "levelId": "b2",
+    "order": 6,
+    "title": "B2 Real World",
+    "description": "Vocabulário e estruturas B2 aplicados: sociedade, economia, meio ambiente, tecnologia, debate e apresentação."
+  },
+  {
+    "id": "m27",
+    "levelId": "b2",
+    "order": 7,
+    "title": "Pronunciation B2",
+    "description": "Padrões de entonação natural, stress em palavras complexas, sufixos e compostos. A prosódia do falante independente avançado."
+  }
+]

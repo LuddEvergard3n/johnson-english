@@ -1,0 +1,243 @@
+/* =============================================================================
+   mobile.css — Responsive overrides for tablet and mobile breakpoints
+   Johnson English Language Laboratory
+   =============================================================================
+   Strategy: mobile-first base styles are in layout.css.
+   This file overrides for larger screens only where needed, and handles
+   specific small-screen concerns (navigation collapse, single-column, etc.)
+   =============================================================================
+   Breakpoints:
+     --bp-sm:  640px   (small mobile → normal mobile)
+     --bp-md:  768px   (tablet portrait)
+     --bp-lg:  1024px  (tablet landscape / small desktop)
+   ============================================================================= */
+
+/* =============================================================================
+   TABLET-AND-BELOW (max-width: 1023px)
+   Collapse lesson sidebar into a horizontal scrolling tab bar.
+   ============================================================================= */
+@media (max-width: 1023px) {
+
+  /* Lesson layout: switch from two-column to single column */
+  .lesson-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Sidebar becomes a horizontal scrolling strip */
+  .lesson-sidebar {
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: var(--border-width) solid var(--color-border);
+    padding: 0;
+    overflow-y: visible;
+    overflow-x: auto;
+    /* Prevent sidebar from growing too tall */
+  }
+
+  .lesson-sidebar-title {
+    display: none; /* Hidden on mobile — space is at a premium */
+  }
+
+  .lesson-nav {
+    display: flex;
+    flex-direction: row;
+    min-width: max-content;
+  }
+
+  .lesson-nav-item {
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    padding: var(--space-3) var(--space-4);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .lesson-nav-item.active {
+    border-left-color: transparent;
+    border-bottom-color: var(--color-accent);
+    background-color: var(--color-accent-bg);
+  }
+
+  /* Lesson content: reduce padding */
+  .lesson-content {
+    padding: var(--space-5) var(--space-4);
+    min-height: auto;
+  }
+}
+
+/* =============================================================================
+   MOBILE (max-width: 767px)
+   ============================================================================= */
+@media (max-width: 767px) {
+
+  /* -- Navigation ------------------------------------------------------------ */
+  .nav-toggle {
+    display: flex; /* Show hamburger button */
+  }
+
+  /* Nav links collapse by default */
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    background-color: var(--color-accent);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+    padding: var(--space-2) 0;
+    z-index: 99;
+    box-shadow: var(--shadow-md);
+  }
+
+  /* When toggle is active (aria-expanded="true"), show nav */
+  .nav-toggle[aria-expanded="true"] + .nav-links {
+    display: flex;
+  }
+
+  .nav-link {
+    padding: var(--space-3) var(--space-6);
+    border-radius: 0;
+  }
+
+  /* -- Hero ------------------------------------------------------------------ */
+  .hero-content {
+    padding: var(--space-10) var(--space-4) var(--space-8);
+  }
+
+  .hero-title {
+    font-size: var(--text-2xl);
+  }
+
+  .hero-lead {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-6);
+  }
+
+  /* -- Trivium stages -------------------------------------------------------- */
+  .trivium-stages {
+    grid-template-columns: 1fr; /* Stack vertically on mobile */
+  }
+
+  /* -- Card grid ------------------------------------------------------------- */
+  .card-grid {
+    grid-template-columns: 1fr; /* Single column on mobile */
+  }
+
+  /* -- General page padding -------------------------------------------------- */
+  .page-container {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  /* -- Header ---------------------------------------------------------------- */
+  .header-inner {
+    padding: 0 var(--space-4);
+  }
+
+  .logo-title {
+    font-size: var(--text-md);
+  }
+
+  /* -- Audio player ---------------------------------------------------------- */
+  .audio-player {
+    flex-wrap: wrap;
+  }
+
+  .audio-player-text {
+    order: 2;
+    width: 100%;
+  }
+
+  .btn--audio {
+    order: 1;
+  }
+
+  .audio-status {
+    order: 3;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* -- Dialogue -------------------------------------------------------------- */
+  .dialogue-bubble {
+    max-width: 85%;
+  }
+
+  /* -- Exercise options ------------------------------------------------------- */
+  .exercise-option {
+    font-size: var(--text-sm);
+    padding: var(--space-3);
+  }
+
+  /* -- Breadcrumb ------------------------------------------------------------ */
+  .breadcrumb-inner {
+    padding: var(--space-2) var(--space-4);
+  }
+
+  /* -- Feedback -------------------------------------------------------------- */
+  .feedback-message {
+    font-size: var(--text-xs);
+  }
+
+  /* -- Typography ------------------------------------------------------------ */
+  h1 { font-size: var(--text-2xl); }
+  h2 { font-size: var(--text-xl); }
+  h3 { font-size: var(--text-lg); }
+}
+
+/* =============================================================================
+   SMALL MOBILE (max-width: 399px)
+   ============================================================================= */
+@media (max-width: 399px) {
+
+  .hero-content {
+    padding: var(--space-8) var(--space-4) var(--space-6);
+  }
+
+  .activity-panel-body {
+    padding: var(--space-4);
+  }
+
+  .dialogue-footer {
+    flex-wrap: wrap;
+  }
+}
+
+/* =============================================================================
+   PRINT
+   Provide a clean, printable version of lesson content.
+   ============================================================================= */
+@media print {
+  #site-header,
+  #site-footer,
+  #breadcrumb,
+  .nav-toggle,
+  .btn--audio,
+  .dialogue-footer {
+    display: none !important;
+  }
+
+  .lesson-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-sidebar {
+    display: none;
+  }
+
+  .lesson-content {
+    padding: 0;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
