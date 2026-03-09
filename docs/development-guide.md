@@ -42,11 +42,11 @@ Johnson English — Test Suite
     ...
 
 ========================================
-  Passed: 81
+  Passed: 105
   Failed: 0
 ```
 
-Os testes cobrem: parseabilidade dos JSONs, integridade estrutural de todas as 75 lições
+Os testes cobrem: parseabilidade dos JSONs, integridade estrutural de todas as 177 lições
 (A1, A2 e B1), roteamento do SPA, e lógica do motor de áudio. Nenhuma dependência
 externa — apenas stdlib do Node.js.
 
@@ -274,10 +274,31 @@ Atualize `CHANGELOG.md` a cada mudança significativa:
 ```markdown
 ## [1.6.0] — 2026-03-07
 ### Adicionado
-- Currículo B1 completo: 7 módulos (m14–m20), 26 lições, 75 total
+- Currículo B1 completo: 7 módulos (m14–m20), 26 lições, 75 total (A1+A2+B1)
 - AudioEngine.hydrateAudioButtons() — delegação de áudio compartilhada
 
 ### Corrigido
 - Botões de áudio sem funcionamento em lições de pronúncia
   (PronunciationEngine não registrava listeners de clique)
 ```
+
+---
+
+## Changelog — Expansão A1 e A2
+
+### A1 — 8 módulos, 31 lições (+8 lições)
+Novos módulos adicionados ao A1 (m42–m43):
+- **m42 — The World Around You**: tempo climático, estações do ano, roupas e cores, animais e pets
+- **m43 — Alphabet, Spelling and Questions**: alfabeto inglês, soletrar em situações reais, números ordinais com datas, Wh-questions completo
+
+### A2 — 11 módulos, 42 lições (+16 lições)
+Novos módulos adicionados ao A2 (m44–m47):
+- **m44 — Language Tools A2**: used to, Reported Speech básico (say/tell), ordem de adjetivos, both/neither/either, telefone e comunicação digital
+- **m45 — Life and Society A2**: escola e educação, transporte detalhado (single/return/platform), férias e tempo livre, números grandes e frações
+- **m46 — Grammar in Use A2**: Second Conditional, connectors (although/however/despite/in spite of), preposições compostas e avançadas (by/since/due to/instead of), question tags
+- **m47 — Home, Food and Opinions**: casa e moradia (rent/landlord/flatmate), culinária (bake/fry/chop/recipe), dar e pedir opiniões (in my opinion/I see your point), inglês social (convites, desculpas, small talk)
+
+### Totais actualizados
+- Módulos: 47 (m01–m47)
+- Lições: 177
+- Testes: 105 (todos passando)

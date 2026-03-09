@@ -281,8 +281,11 @@ function runPronunciationTests(lessons, describe, it, assert) {
           s.words.forEach((w, j) => {
             assert(typeof w.en === 'string' && w.en.length > 0,
               `${id}: sound[${i}].words[${j}] sem 'en'.`);
-            assert(typeof w.pt === 'string' && w.pt.length > 0,
-              `${id}: sound[${i}].words[${j}] sem 'pt'.`);
+            // C1 and above: no translations — pt field is intentionally absent
+            if (lesson.levelId !== 'c1' && lesson.levelId !== 'c2') {
+              assert(typeof w.pt === 'string' && w.pt.length > 0,
+                `${id}: sound[${i}].words[${j}] sem 'pt'.`);
+            }
           });
         });
       });

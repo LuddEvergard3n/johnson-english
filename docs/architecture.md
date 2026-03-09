@@ -53,9 +53,9 @@ johnson-english/
 │           └── pronunciation-engine.js  Lições de pronúncia (type: "pronunciation")
 │
 ├── data/
-│   ├── levels.json             Definições de nível CEFR (A1, A2, B1)
-│   ├── modules.json            27 módulos (m01–m27)
-│   └── lessons.json            101 lições com conteúdo completo
+│   ├── levels.json             Definições de nível CEFR (A1–C2)
+│   ├── modules.json            47 módulos (m01–m47)
+│   └── lessons.json            177 lições com conteúdo completo
 │
 ├── tests/
 │   ├── test-runner.js          Orquestrador de testes (Node.js, zero deps)

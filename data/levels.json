@@ -1,30 +1,44 @@
 [
   {
     "id": "a1",
-    "label": "Beginner",
+    "label": "Iniciante",
     "cefr": "A1",
-    "description": "You can understand and use familiar everyday expressions and very basic phrases. You can introduce yourself and others and can ask and answer questions about personal details.",
+    "description": "Você consegue compreender e usar expressões cotidianas e frases muito básicas. Consegue se apresentar e apresentar outras pessoas, além de fazer e responder perguntas sobre informações pessoais.",
     "color": "#1e3a5f"
   },
   {
     "id": "a2",
-    "label": "Elementary",
+    "label": "Elementar",
     "cefr": "A2",
-    "description": "You can understand sentences and frequently used expressions related to areas of immediate relevance. You can communicate in simple and routine tasks.",
+    "description": "Você consegue compreender frases e expressões usadas com frequência em áreas de interesse imediato. Consegue se comunicar em tarefas simples e rotineiras que envolvam troca direta de informações.",
     "color": "#2d6a4f"
   },
   {
     "id": "b1",
-    "label": "Intermediate",
+    "label": "Intermediário",
     "cefr": "B1",
-    "description": "You can understand the main points of clear standard input on familiar matters. You can deal with most situations likely to arise while travelling in an English-speaking area.",
+    "description": "Você consegue compreender os pontos principais de textos claros sobre assuntos familiares. Consegue lidar com a maioria das situações que surgem ao viajar para um país de língua inglesa.",
     "color": "#5f2a1e"
   },
   {
     "id": "b2",
-    "label": "Upper-Intermediate",
+    "label": "Intermediário Superior",
     "cefr": "B2",
-    "description": "You can understand the main ideas of complex text on both concrete and abstract topics. You can interact with a degree of fluency and spontaneity that makes regular interaction with native speakers quite possible.",
+    "description": "Você consegue compreender as ideias centrais de textos complexos sobre temas concretos e abstratos. Consegue se comunicar com fluência e espontaneidade suficientes para uma interação natural com falantes nativos.",
     "color": "#4a1a6b"
+  },
+  {
+    "id": "c1",
+    "label": "Advanced",
+    "cefr": "C1",
+    "description": "You can express yourself fluently and spontaneously without much obvious searching for expressions. You can use language flexibly and effectively for social, academic and professional purposes.",
+    "color": "#1a1a2e"
+  },
+  {
+    "id": "c2",
+    "label": "Mastery",
+    "cefr": "C2",
+    "description": "You can understand with ease virtually everything heard or read. You can express yourself spontaneously, very fluently and precisely, differentiating finer shades of meaning even in more complex situations.",
+    "color": "#0d0d1a"
   }
 ]

@@ -1,6 +1,6 @@
 # Johnson English — Laboratório de Língua
 
-Plataforma acadêmica de aprendizado de inglês baseada no método clássico do **Trivium**:
+Plataforma académica de aprendizado de inglês baseada no método clássico do **Trivium**:
 Gramática (absorção) → Lógica (estrutura) → Retórica (produção).
 
 Parte de um ecossistema educacional ao lado de **Heródoto** (História),
@@ -13,25 +13,15 @@ Parte de um ecossistema educacional ao lado de **Heródoto** (História),
 ```bash
 git clone https://github.com/seu-usuario/johnson-english.git
 cd johnson-english
-
-# ES Modules exigem HTTP — file:// não funciona
 python3 -m http.server 8080
-# ou: npx serve .
-
 open http://localhost:8080
 ```
 
-### Opcional: servidor TTS
-
 ```bash
+# Opcional: servidor TTS local
 pip install TTS flask flask-cors soundfile numpy
 python server/coqui-tts-service/wrapper.py
 ```
-
-Sem o servidor TTS, a Web Speech API nativa do navegador entra como fallback
-automático. A aplicação funciona completamente em qualquer caso.
-
-### Executar testes
 
 ```bash
 node tests/test-runner.js
@@ -39,19 +29,25 @@ node tests/test-runner.js
 
 ---
 
-## Currículo Completo
+## Currículo Completo — A1 a C2
 
-| Nível | Módulos | Lições | Perfil CEFR |
-|---|---|---|---|
-| A1 | 6 (m01–m06) | 23 | Expressões cotidianas, apresentação pessoal, perguntas simples |
-| A2 | 7 (m07–m13) | 26 | Comunicação rotineira, situações reais, narrativa básica |
-| B1 | 7 (m14–m20) | 26 | Narrativa, opinião, explicação — usuário independente |
-| B2 | 7 (m21–m27) | 26 | Argumentação, análise, debate — usuário independente avançado |
-| **Total** | **27** | **101** | |
+| Nível | Módulos | Lições | Imersão | Perfil CEFR |
+|---|---|---|---|---|
+| A1 | 8 (m01–m06, m42–m43) | 31 | PT+EN | Expressões cotidianas, apresentação pessoal |
+| A2 | 11 (m07–m13, m44–m47) | 42 | PT+EN | Comunicação rotineira, narrativa básica |
+| B1 | 7 (m14–m20) | 26 | PT+EN | Narrativa, opinião, explicação |
+| B2 | 7 (m21–m27) | 26 | PT+EN | Argumentação, análise, debate |
+| C1 | 7 (m28–m34) | 26 | EN only | Argumentação sofisticada, precisão discursiva |
+| C2 | 7 (m35–m41) | 26 | EN only | Domínio retórico, pragmático e estilístico |
+| **Total** | **47** | **177** | | |
 
-### Módulos A1
+**C1–C2 — imersão total:** a partir do módulo m28, todas as explicações, exemplos e exercícios estão integralmente em inglês. Não há traduções.
 
-| ID | Título | Gramática principal |
+---
+
+### Módulos A1 (m01–m06)
+
+| ID | Título | Foco |
 |---|---|---|
 | m01 | Presenting Yourself | Present Simple, verbo to be |
 | m02 | Daily Routine | Present Simple, adv. de frequência |
@@ -60,136 +56,130 @@ node tests/test-runner.js
 | m05 | Time and Dates | Horas, datas, preposições de tempo |
 | m06 | Pronunciation A1 | TH sound, vogais longas e curtas |
 
-### Módulos A2
+### Módulos A2 (m07–m13, m44–m47)
 
-| ID | Título | Gramática principal |
+| ID | Título | Foco |
 |---|---|---|
-| m07 | Family and Relationships | Comparativos, superlativos, as…as |
-| m08 | Shopping and Money | Too/enough, countable/uncountable, quantifiers |
-| m09 | Travel and Transport | Direções, Past Simple completo, Future Will |
-| m10 | Health and the Body | Corpo, sintomas, must/have to/mustn't |
-| m11 | Work and Technology | Present Continuous, Simple vs Continuous, gerúndio |
-| m12 | Hobbies and Free Time | Adv. de frequência, sugestões, narração passada |
-| m13 | Pronunciation A2 | Schwa /ə/, entonação ↑↓, linking, contrações |
+| m07 | Family and Relationships | Comparativos, superlativos |
+| m08 | Shopping and Money | Too/enough, countable/uncountable |
+| m09 | Travel and Transport | Direções, Past Simple, Future Will |
+| m10 | Health and the Body | Corpo, sintomas, must/have to |
+| m11 | Work and Technology | Present Continuous, gerúndio |
+| m12 | Hobbies and Free Time | Adv. de frequência, narração passada |
+| m13 | Pronunciation A2 | Schwa /ə/, entonação, linking |
+| m44 | Language Tools A2 | Used to, Reported Speech básico, ordem de adjetivos, both/neither/either, telefone e e-mail |
+| m45 | Life and Society A2 | Escola e educação, transporte, férias e tempo livre, números grandes |
+| m46 | Grammar in Use A2 | Second Conditional, connectors (although/however/despite), preposições compostas, question tags |
+| m47 | Home, Food and Opinions | Casa e moradia, vocabulário de culinária, dar e pedir opiniões, inglês social |
 
-### Módulos B1
+### Módulos B1 (m14–m20)
 
-| ID | Título | Gramática principal |
+| ID | Título | Foco |
 |---|---|---|
-| m14 | Experiences and the Past | Present Perfect (ever/never, already/yet/just, for/since) vs Past Simple |
-| m15 | Stories and Memories | Past Continuous, ação interrompida, narrativa integrada |
-| m16 | Plans and Possibilities | Future arrangements, First Conditional, might/may/could |
-| m17 | The World Around Us | Passive Voice, Relative Clauses, vocabulário de sociedade |
-| m18 | How to Express Yourself | Gerund vs Infinitive, Reported Speech, linking words B1 |
-| m19 | B1 Real Life | Entrevista, viagem internacional, negociação, síntese B1 |
-| m20 | Pronunciation B1 | Word/sentence stress, assimilação, elisão, fala conectada |
+| m14 | Experiences and the Past | Present Perfect vs Past Simple |
+| m15 | Stories and Memories | Past Continuous, narrativa integrada |
+| m16 | Plans and Possibilities | Future, First Conditional, modals |
+| m17 | The World Around Us | Passive Voice, Relative Clauses |
+| m18 | How to Express Yourself | Gerund vs Infinitive, Reported Speech B1 |
+| m19 | B1 Real Life | Entrevista, viagem, negociação |
+| m20 | Pronunciation B1 | Word/sentence stress, fala conectada |
 
-### Módulos B2
+### Módulos B2 (m21–m27)
 
-| ID | Título | Gramática principal |
+| ID | Título | Foco |
 |---|---|---|
-| m21 | Perfect Tenses | PP Continuous, Past Perfect, Past Perfect Continuous, integração |
-| m22 | Hypothetical World | Second/Third Conditional, Mixed Conditionals, wishes e regrets |
-| m23 | Reporting and Voice | Reported Speech avançado, Passive Voice B2, passiva impessoal, reporting verbs |
-| m24 | Future and Speculation | Future Perfect/Continuous, modal deduction B2, graus de certeza |
-| m25 | Argument and Discourse | Discourse markers B2, argumentação, relative clauses avançadas, essay B2 |
-| m26 | B2 Real World | Sociedade/cultura, trabalho/economia, meio ambiente/IA, debate e apresentação |
-| m27 | Pronunciation B2 | Padrões de entonação, stress em palavras complexas, compostos |
+| m21 | Perfect Tenses | PP Continuous, Past Perfect, Past Perfect Continuous |
+| m22 | Hypothetical World | Second/Third Conditional, Mixed Conditionals, wishes |
+| m23 | Reporting and Voice | Reported Speech avançado, Passive Voice B2 |
+| m24 | Future and Speculation | Future Perfect/Continuous, modal deduction |
+| m25 | Argument and Discourse | Discourse markers B2, argumentação, relative clauses |
+| m26 | B2 Real World | Sociedade, trabalho, meio ambiente, debate |
+| m27 | Pronunciation B2 | Padrões de entonação, stress em palavras complexas |
+
+### Módulos C1 — English Only (m28–m34)
+
+| ID | Título | Foco |
+|---|---|---|
+| m28 | Advanced Grammar I | Inversion, cleft sentences, participle clauses, nominalisation |
+| m29 | Advanced Grammar II | Advanced passive, ellipsis/substitution, verb patterns, register |
+| m30 | Conditionals and Modals C1 | Mixed conditionals C1, retrospective modals, hedging, inference |
+| m31 | Discourse and Argument C1 | Discourse markers C1, reported speech C1, academic essay, critical reading |
+| m32 | Language in Use C1 | Collocations C1, vocabulary precision, nominalisation in context |
+| m33 | C1 Real World | Academic discussion, professional writing, cultural commentary |
+| m34 | Pronunciation C1 | Weak forms and connected speech, prosody and register |
+
+### Módulos C2 — English Only (m35–m41)
+
+| ID | Título | Foco |
+|---|---|---|
+| m35 | Rhetoric and Style C2 | Fronting, rhetorical parallelism, discourse grammar, stylistic control |
+| m36 | Pragmatics and Implicature C2 | Implicature, irony/understatement, politeness strategies, register shifting |
+| m37 | Lexical Mastery C2 | Collocations at scale, idiomatic restraint, emotional precision, abstract vocabulary |
+| m38 | Advanced Writing C2 | Academic writing C2, argument precision, synthesis, revision as craft |
+| m39 | Speaking and Listening C2 | Extended speaking, listening to dense input, debate, improvisation |
+| m40 | C2 Real World | Academic discourse, high-stakes professional English, literary reading, final synthesis |
+| m41 | Pronunciation C2 | Contrastive stress, discourse intonation (irony, concession, suspense) |
+
+---
+
+## Progressão Pedagógica
+
+| Nível | Explicações | Exemplos | Exercícios |
+|---|---|---|---|
+| A1–B2 | Português | EN + PT | EN + PT |
+| C1–C2 | English only | EN only | EN only |
+
+A diferença real entre os níveis:
+
+| Nível | O que o usuário faz |
+|---|---|
+| B2 | Argumenta |
+| C1 | Argumenta com precisão e sofisticação |
+| C2 | Argumenta com precisão, estratégia e controle estilístico — a língua deixou de ser obstáculo |
 
 ---
 
 ## Arquitetura
 
 ```
-index.html              Shell da aplicação (SPA)
+index.html
 css/
-  base.css              Tokens de design, reset, tipografia
-  layout.css            Componentes, grid, botões, exercícios
-  mobile.css            Overrides responsivos
+  base.css / layout.css / mobile.css
 js/
-  app.js                Bootstrap e eventos globais
-  router.js             Roteamento por hash (#/lesson/a1/m01/l01)
-  state.js              Dados JSON e persistência de progresso
-  lesson-engine.js      Hidratação das lições normais
-  audio-engine.js       TTS + Web Speech API + fallback silencioso
-  shadowing-engine.js   Modo shadowing
-  components/           Renderizadores de views (strings HTML)
+  app.js / router.js / state.js
+  lesson-engine.js / audio-engine.js / shadowing-engine.js
+  components/
   modules/
-    grammar/            GrammarEngine (Escuta + Repetição)
-    logic/              LogicEngine (Prática)
-    rhetoric/           RhetoricEngine (Produção)
-    pronunciation/      PronunciationEngine (type:"pronunciation")
+    grammar/ logic/ rhetoric/ pronunciation/
 data/
-  levels.json           Níveis CEFR (A1, A2, B1, B2)
-  modules.json          27 módulos (m01–m27)
-  lessons.json          101 lições com conteúdo completo
+  levels.json       6 níveis (A1–C2)
+  modules.json      47 módulos (m01–m47)
+  lessons.json      177 lições
 tests/
-  test-runner.js        Orquestrador (Node.js, zero dependências)
-  content-tests.js      Integridade A1
-  content-tests-a2.js   Integridade A2
-  audio-tests.js        Motor de áudio
+  test-runner.js    105 testes (Node.js, zero dependências)
 server/
-  coqui-tts-service/    Wrapper Flask para Coqui TTS
+  coqui-tts-service/
 docs/
-  architecture.md       Estrutura técnica detalhada
-  pedagogy.md           Método Trivium e alinhamento CEFR
-  audio-system.md       Sistema de áudio multicamada
-  development-guide.md  Guia de contribuição e convenções
+  architecture.md / pedagogy.md / audio-system.md / development-guide.md
 ```
-
----
-
-## Stack Tecnológico
-
-| Camada | Tecnologia | Motivo |
-|---|---|---|
-| Frontend | HTML5, CSS3, ES Modules | Sem build tools, compatível com GitHub Pages |
-| Roteamento | SPA por hash | Sem configuração de servidor |
-| Áudio primário | Coqui TTS (XTTS v2) | Open source, local, sem custo de API |
-| Áudio fallback | Web Speech API | Nativa do navegador, zero dependências |
-| Testes | stdlib do Node.js | Sem framework externo |
-
----
-
-## Método Pedagógico
-
-Cada lição segue três etapas em sequência rígida:
-
-1. **Gramática (Absorção)** — Escuta e shadowing antes de qualquer análise
-2. **Lógica (Estrutura)** — Reordenação, lacunas, identificação de padrões
-3. **Retórica (Produção)** — Prompts de escrita e simulação de diálogo
-
-Ver `docs/pedagogy.md` para a justificativa completa.
 
 ---
 
 ## Lições de Pronúncia
 
-Quatro módulos usam `"type": "pronunciation"` em `lessons.json`:
-m06 (A1), m13 (A2), m20 (B1), m27 (B2).
+Seis módulos usam `"type": "pronunciation"`:
+m06 (A1), m13 (A2), m20 (B1), m27 (B2), m34 (C1), m41 (C2).
 
-Esse tipo ativa o `PronunciationEngine` com estrutura diferente:
-**Som → Palavras → Pares Mínimos → Repetição → Produção** (sem Prática).
+Activam o `PronunciationEngine`: Sons → Pares Mínimos → Repetição → Produção.
+A partir de m34 (C1), os campos `pt` em `sound.words` são omitidos.
 
 ---
 
 ## Sistema de Áudio
 
-Detecção automática em três camadas:
-
-1. **Coqui TTS** — alta qualidade, servidor local na porta 5002
-2. **Web Speech API** — fallback nativo, zero configuração
-3. **Fallback silencioso** — UI exibe estado de erro sem exceção
-
----
-
-## Segurança
-
-- Dados JSON escapados via `_escape()` antes de toda inserção como innerHTML
-- Entrada TTS sanitizada no frontend e no servidor
-- CSP via `<meta>` em `index.html`
-- Rate limiting: throttle de 500ms no cliente + 30 req/60s no servidor
-- Sem dependências externas de CDN em produção
+1. **Coqui TTS** — alta qualidade, servidor local porta 5002
+2. **Web Speech API** — fallback nativo do browser
+3. **Fallback silencioso** — degradação sem exceção
 
 ---
 
@@ -197,9 +187,7 @@ Detecção automática em três camadas:
 
 1. Push para repositório GitHub
 2. Settings → Pages → Source: `main`, raiz `/`
-3. Site disponível em `https://usuario.github.io/johnson-english/`
-4. Para áudio de alta qualidade: hospede o servidor TTS separadamente
-   e atualize `DEFAULT_TTS_URL` em `js/audio-engine.js`
+3. URL: `https://usuario.github.io/johnson-english/`
 
 ---
 

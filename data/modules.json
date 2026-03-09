@@ -187,5 +187,145 @@
     "order": 7,
     "title": "Pronunciation B2",
     "description": "Padrões de entonação natural, stress em palavras complexas, sufixos e compostos. A prosódia do falante independente avançado."
+  },
+  {
+    "id": "m28",
+    "levelId": "c1",
+    "order": 1,
+    "title": "Advanced Grammar I",
+    "description": "Inversion, cleft sentences, participle clauses and nominalisation — the structural hallmarks of sophisticated English."
+  },
+  {
+    "id": "m29",
+    "levelId": "c1",
+    "order": 2,
+    "title": "Advanced Grammar II",
+    "description": "Advanced passive, ellipsis, substitution, complex verb patterns and register precision."
+  },
+  {
+    "id": "m30",
+    "levelId": "c1",
+    "order": 3,
+    "title": "Conditionals and Modals C1",
+    "description": "Mixed conditionals with cross-time reference, the full retrospective modal system, hedging and epistemic stance."
+  },
+  {
+    "id": "m31",
+    "levelId": "c1",
+    "order": 4,
+    "title": "Discourse and Argument C1",
+    "description": "Advanced discourse markers, C1 reported speech, academic essay structure and critical reading skills."
+  },
+  {
+    "id": "m32",
+    "levelId": "c1",
+    "order": 5,
+    "title": "Language in Use C1",
+    "description": "C1 collocations, vocabulary precision, nominalisation in context and C1 speaking strategies."
+  },
+  {
+    "id": "m33",
+    "levelId": "c1",
+    "order": 6,
+    "title": "C1 Real World",
+    "description": "Academic seminars, professional documents, cultural commentary and full-synthesis debate at C1 level."
+  },
+  {
+    "id": "m34",
+    "levelId": "c1",
+    "order": 7,
+    "title": "Pronunciation C1",
+    "description": "Mastery of weak forms and connected speech; prosody, rhythm and social meaning of intonation."
+  },
+  {
+    "id": "m35",
+    "levelId": "c2",
+    "order": 1,
+    "title": "Rhetoric and Style C2",
+    "description": "Fronting, rhetorical parallelism, discourse grammar and the architecture of stylistically controlled prose. At C2, structure is a rhetorical instrument."
+  },
+  {
+    "id": "m36",
+    "levelId": "c2",
+    "order": 2,
+    "title": "Pragmatics and Implicature C2",
+    "description": "What is meant vs what is said. Irony, understatement, politeness strategies and register shifting — the pragmatic dimension of full mastery."
+  },
+  {
+    "id": "m37",
+    "levelId": "c2",
+    "order": 3,
+    "title": "Lexical Mastery C2",
+    "description": "Collocations at scale, idiomatic competence with restraint, emotional precision and abstract philosophical vocabulary. Lexical depth, not lexical breadth."
+  },
+  {
+    "id": "m38",
+    "levelId": "c2",
+    "order": 4,
+    "title": "Advanced Writing C2",
+    "description": "Academic density with critical voice, argument at C2 precision, synthesis of complex information and revision as craft."
+  },
+  {
+    "id": "m39",
+    "levelId": "c2",
+    "order": 5,
+    "title": "Speaking and Listening C2",
+    "description": "Extended argument under pressure, listening to dense authentic input, debate with tonal control and real-time reformulation."
+  },
+  {
+    "id": "m40",
+    "levelId": "c2",
+    "order": 6,
+    "title": "C2 Real World",
+    "description": "Academic discourse, high-stakes professional communication, literary reading and the final synthesis: the language as instrument, medium and system."
+  },
+  {
+    "id": "m41",
+    "levelId": "c2",
+    "order": 7,
+    "title": "Pronunciation C2",
+    "description": "Prosodic strategy as meaning-making: contrastive stress, discourse intonation for irony, concession, suspense and rhetorical framing."
+  },
+  {
+    "id": "m42",
+    "levelId": "a1",
+    "order": 7,
+    "title": "The World Around You",
+    "description": "Vocabulário essencial do mundo ao redor: tempo climático, estações do ano, roupas e cores, animais e pets."
+  },
+  {
+    "id": "m43",
+    "levelId": "a1",
+    "order": 8,
+    "title": "Alphabet, Spelling and Questions",
+    "description": "O alfabeto inglês completo, como soletrar em situações reais, números ordinais com datas e as sete perguntas fundamentais."
+  },
+  {
+    "id": "m44",
+    "levelId": "a2",
+    "order": 8,
+    "title": "Language Tools A2",
+    "description": "Used to para hábitos passados, reported speech básico, ordem de adjetivos com both/neither/either e comunicação por telefone e e-mail."
+  },
+  {
+    "id": "m45",
+    "levelId": "a2",
+    "order": 9,
+    "title": "Life and Society A2",
+    "description": "Escola e educação, transporte e viagens, férias e tempo livre, números grandes e vocabulário de dinheiro."
+  },
+  {
+    "id": "m46",
+    "levelId": "a2",
+    "order": 10,
+    "title": "Grammar in Use A2",
+    "description": "Second Conditional para situações hipotéticas, connectors discursivos (although/however/despite), preposições compostas e avançadas, e question tags."
+  },
+  {
+    "id": "m47",
+    "levelId": "a2",
+    "order": 11,
+    "title": "Home, Food and Opinions",
+    "description": "Casa e moradia (rent/flatmate/landlord), vocabulário de culinária (bake/fry/recipe), dar e pedir opiniões com educação, e inglês social para convites e small talk."
   }
 ]
