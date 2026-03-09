@@ -4,11 +4,10 @@
  *
  * Tests the AudioEngine logic that can be verified without a browser:
  *   - Text sanitisation rules
- *   - Throttle timing logic
  *   - Cache key consistency
  *
- * Note: Actual TTS requests and HTMLAudioElement playback require a browser
- * and a running Coqui TTS server. Those are integration tests outside scope.
+ * Note: Actual Web Speech API playback requires a browser environment.
+ * Those are integration tests outside scope.
  */
 
 'use strict';
@@ -16,9 +15,6 @@
 async function run({ describe, it, assert }) {
 
   describe('AudioEngine — text sanitisation', () => {
-    /* Replicate the sanitisation logic from audio-engine.js for unit testing.
-       In a browser environment this would be imported; here we duplicate
-       the logic so the test runs in Node.js without a DOM. */
     function sanitiseText(text) {
       return String(text)
         .replace(/[^\w\s.,!?'"();:\-]/gi, ' ')
@@ -28,8 +24,8 @@ async function run({ describe, it, assert }) {
     }
 
     it('passes clean English text through unchanged', () => {
-      const input    = 'Hello, how are you?';
-      const result   = sanitiseText(input);
+      const input  = 'Hello, how are you?';
+      const result = sanitiseText(input);
       assert.equal(result, input);
     });
 
@@ -67,62 +63,21 @@ async function run({ describe, it, assert }) {
     });
   });
 
-  describe('AudioEngine — throttle logic', () => {
-    it('respects the throttle interval (simulation)', async () => {
-      /* Simulate the throttle by tracking timestamps */
-      const THROTTLE_MS     = 500;
-      let lastRequestTime   = 0;
-      const callTimestamps  = [];
-
-      async function simulateThrottle() {
-        const now   = Date.now();
-        const delta = now - lastRequestTime;
-        if (delta < THROTTLE_MS) {
-          await new Promise((r) => setTimeout(r, THROTTLE_MS - delta));
-        }
-        lastRequestTime = Date.now();
-        callTimestamps.push(lastRequestTime);
-      }
-
-      /* Fire 3 simulated requests */
-      await simulateThrottle();
-      await simulateThrottle();
-      await simulateThrottle();
-
-      /* Each call should be at least THROTTLE_MS apart */
-      for (let i = 1; i < callTimestamps.length; i++) {
-        const gap = callTimestamps[i] - callTimestamps[i - 1];
-        assert(
-          gap >= THROTTLE_MS - 20, /* 20ms tolerance for timer imprecision */
-          `Gap between calls was ${gap}ms, expected >= ${THROTTLE_MS}ms`
-        );
-      }
-    });
-  });
-
   describe('AudioEngine — cache key consistency', () => {
-    it('same text produces the same sanitised cache key', () => {
-      function sanitise(text) {
-        return String(text)
-          .replace(/[^\w\s.,!?'"();:\-]/gi, ' ')
-          .replace(/\s{2,}/g, ' ')
-          .trim()
-          .slice(0, 500);
-      }
+    function sanitise(text) {
+      return String(text)
+        .replace(/[^\w\s.,!?'"();:\-]/gi, ' ')
+        .replace(/\s{2,}/g, ' ')
+        .trim()
+        .slice(0, 500);
+    }
 
+    it('same text produces the same sanitised cache key', () => {
       const text = 'Good morning!';
       assert.equal(sanitise(text), sanitise(text), 'Cache key must be deterministic');
     });
 
     it('different text produces different cache keys', () => {
-      function sanitise(text) {
-        return String(text)
-          .replace(/[^\w\s.,!?'"();:\-]/gi, ' ')
-          .replace(/\s{2,}/g, ' ')
-          .trim()
-          .slice(0, 500);
-      }
-
       assert(
         sanitise('Hello') !== sanitise('Goodbye'),
         'Different texts must produce different keys'
@@ -131,7 +86,6 @@ async function run({ describe, it, assert }) {
   });
 
   describe('Route format validation', () => {
-    /* Replicate parseHash logic from router.js */
     function parseHash(hash) {
       const parts  = hash.replace(/^#\/?/, '').split('/').filter(Boolean);
       const route  = parts[0] || '';

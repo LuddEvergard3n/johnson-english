@@ -6,7 +6,6 @@ Johnson English é uma aplicação web de página única (SPA) hospedada no GitH
 Construída com HTML5 puro, CSS3 e ES Modules — sem ferramentas de build,
 sem frameworks, sem transpilação.
 
-Um componente de servidor separado (Coqui TTS) executa localmente e fornece síntese
 de voz via HTTP. O frontend opera completamente sem ele; a Web Speech API nativa do
 navegador entra como fallback automático.
 
@@ -54,8 +53,8 @@ johnson-english/
 │
 ├── data/
 │   ├── levels.json             Definições de nível CEFR (A1–C2)
-│   ├── modules.json            47 módulos (m01–m47)
-│   └── lessons.json            177 lições com conteúdo completo
+│   ├── modules.json            55 módulos (m01–m55)
+│   └── lessons.json            209 lições com conteúdo completo
 │
 ├── tests/
 │   ├── test-runner.js          Orquestrador de testes (Node.js, zero deps)
@@ -64,9 +63,7 @@ johnson-english/
 │   └── audio-tests.js          Testes do motor de áudio
 │
 ├── server/
-│   └── coqui-tts-service/
 │       ├── README.md
-│       └── wrapper.py          Wrapper Flask TTS com rate limiting
 │
 └── docs/
     ├── architecture.md         Este arquivo
@@ -85,7 +82,6 @@ johnson-english/
 | `router.js` | Mapeamento URL → view + despacho de engine por tipo de lição |
 | `state.js` | Carregamento de dados JSON e persistência de progresso |
 | `lesson-engine.js` | Hidratação pós-renderização das lições normais (type ausente) |
-| `audio-engine.js` | TTS server, Web Speech API, cache, throttle, delegação de áudio |
 | `shadowing-engine.js` | Ciclo de vida da atividade de shadowing |
 | `lesson-view.js` | Renderização HTML de lições normais |
 | `pronunciation-lesson-view.js` | Renderização HTML de lições de pronúncia |

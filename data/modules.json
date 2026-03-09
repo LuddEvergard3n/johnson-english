@@ -327,5 +327,61 @@
     "order": 11,
     "title": "Home, Food and Opinions",
     "description": "Casa e moradia (rent/flatmate/landlord), vocabulário de culinária (bake/fry/recipe), dar e pedir opiniões com educação, e inglês social para convites e small talk."
+  },
+  {
+    "id": "m48",
+    "levelId": "b1",
+    "order": 8,
+    "title": "Grammar Depth B1",
+    "description": "Third Conditional, Mixed Conditionals, Wish e If Only, Present Perfect Continuous, adjetivos compostos e expressões de medida."
+  },
+  {
+    "id": "m49",
+    "levelId": "b1",
+    "order": 9,
+    "title": "Practical English B1",
+    "description": "Escrita formal (e-mail e carta), conselhos com ought to e had better, vocabulário de saúde e estilo de vida, e habilidades de discussão e debate."
+  },
+  {
+    "id": "m50",
+    "levelId": "b2",
+    "order": 8,
+    "title": "Advanced Grammar B2",
+    "description": "Inversão formal, participle clauses, nominalização, ellipsis, perguntas embutidas e subjuntivo mandativo com phrasal verbs B2 avançados."
+  },
+  {
+    "id": "m51",
+    "levelId": "b2",
+    "order": 9,
+    "title": "Style and Register B2",
+    "description": "Registo formal vs informal, vocabulário de precisão, graus de certeza e probabilidade, colocações avançadas, e leitura e escuta crítica."
+  },
+  {
+    "id": "m52",
+    "levelId": "c1",
+    "order": 8,
+    "title": "Advanced Lexis C1",
+    "description": "Idioms C1, three-part phrasal verbs, advanced collocations (exert/wield/bear the brunt/garner/brook), and advanced article uses including the + adjective as noun class."
+  },
+  {
+    "id": "m53",
+    "levelId": "c1",
+    "order": 9,
+    "title": "Expression and Fluency C1",
+    "description": "Formal subjunctive in fixed expressions (as it were/be that as it may/lest), spoken fluency strategies and turn management, complex word formation and derivational chains, rhetorical devices for persuasion."
+  },
+  {
+    "id": "m54",
+    "levelId": "c2",
+    "order": 8,
+    "title": "Language as System C2",
+    "description": "Absolute constructions and literary/archaic register (albeit/hitherto/whereupon/notwithstanding); deixis and deictic shift; lexical density, register blending and code-switching; conceptual metaphor and extended metaphor."
+  },
+  {
+    "id": "m55",
+    "levelId": "c2",
+    "order": 9,
+    "title": "Language, Power and Genre C2",
+    "description": "Critical Discourse Analysis — euphemism, doublespeak and the language of power; etymology and productive root knowledge; text genre conventions (obituary/manifesto/op-ed/executive brief); rare and precise vocabulary (tendentious/specious/apposite/expedient), style mimicry and the limits of C2."
   }
 ]

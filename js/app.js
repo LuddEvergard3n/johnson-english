@@ -5,7 +5,7 @@
  * Responsabilidades:
  *   - Importar e inicializar todos os módulos de nível superior na ordem correta.
  *   - Registrar event listeners globais (toggle de navegação, mudanças de rota).
- *   - Exibir banner informativo sobre o backend de áudio detectado.
+ *   - Exibir banner de aviso se a Web Speech API não estiver disponível.
  *
  * Não contém lógica de negócio — delega para os módulos dedicados.
  */
@@ -18,7 +18,7 @@ import { AudioEngine } from './audio-engine.js';
    ORDEM DE INICIALIZAÇÃO
    1. State   — deve existir antes que Router ou qualquer componente leia dados.
    2. Audio   — inicializar cedo; componentes referenciam durante render.
-   3. Router  — lê o hash atual e renderiza a view inicial.
+   3. Router  — lê o hash actual e renderiza a view inicial.
    ============================================================================ */
 
 const state  = State.init();
@@ -51,7 +51,7 @@ if (navToggle && navLinks) {
 }
 
 /* ============================================================================
-   DESTAQUE DO LINK DE NAVEGAÇÃO ATIVO
+   DESTAQUE DO LINK DE NAVEGAÇÃO ACTIVO
    ============================================================================ */
 function syncNavHighlight() {
   const hash = window.location.hash.split('/')[1] || 'home';
@@ -72,55 +72,27 @@ syncNavHighlight();
 
 /* ============================================================================
    BANNER DE STATUS DO ÁUDIO
-   Detecta o backend após a primeira interação e informa o usuário de forma
-   discreta — especialmente útil quando o servidor TTS não está rodando.
+   Exibido quando a Web Speech API não está disponível no browser.
    ============================================================================ */
 const audioBanner = document.getElementById('audio-banner');
 
-/**
- * Exibe o banner com a mensagem informando o backend detectado.
- * O banner fecha automaticamente após 5 segundos.
- *
- * @param {string} message
- * @param {string} type  'info' | 'warning'
- */
 function showAudioBanner(message, type = 'info') {
   if (!audioBanner) return;
   audioBanner.textContent = message;
   audioBanner.className   = `audio-banner audio-banner--${type}`;
   audioBanner.classList.remove('hidden');
-
-  /* Fecha automaticamente */
-  setTimeout(() => {
-    audioBanner.classList.add('hidden');
-  }, 6000);
+  setTimeout(() => audioBanner.classList.add('hidden'), 6000);
 }
 
-/*
- * Monitora o backend detectado pelo AudioEngine.
- * Na primeira vez que a propriedade sai de 'unknown', exibe o banner.
- */
-let _bannerShown = false;
-const _backendPoll = setInterval(() => {
-  const backend = AudioEngine.backend;
-  if (backend === 'unknown' || _bannerShown) return;
-
-  _bannerShown = true;
-  clearInterval(_backendPoll);
-
-  if (backend === 'speech') {
+/* Verifica suporte após carregamento inicial */
+window.addEventListener('load', () => {
+  if (!window.speechSynthesis) {
     showAudioBanner(
-      'Áudio ativado via voz do navegador. Para qualidade maior, inicie o servidor Coqui TTS.',
-      'info'
-    );
-  } else if (backend === 'none') {
-    showAudioBanner(
-      'Áudio indisponível neste ambiente. O conteúdo pode ser estudado sem som.',
+      'Áudio indisponível: este navegador não suporta a Web Speech API. Use Chrome, Edge ou Safari.',
       'warning'
     );
   }
-  /* Backend 'server': nenhum banner necessário — é o comportamento esperado. */
-}, 300);
+});
 
 /* Expõe módulos na janela para inspeção em desenvolvimento */
 if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {

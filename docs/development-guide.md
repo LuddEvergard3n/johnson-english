@@ -46,7 +46,7 @@ Johnson English — Test Suite
   Failed: 0
 ```
 
-Os testes cobrem: parseabilidade dos JSONs, integridade estrutural de todas as 177 lições
+Os testes cobrem: parseabilidade dos JSONs, integridade estrutural de todas as 209 lições
 (A1, A2 e B1), roteamento do SPA, e lógica do motor de áudio. Nenhuma dependência
 externa — apenas stdlib do Node.js.
 
@@ -299,6 +299,23 @@ Novos módulos adicionados ao A2 (m44–m47):
 - **m47 — Home, Food and Opinions**: casa e moradia (rent/landlord/flatmate), culinária (bake/fry/chop/recipe), dar e pedir opiniões (in my opinion/I see your point), inglês social (convites, desculpas, small talk)
 
 ### Totais actualizados
-- Módulos: 47 (m01–m47)
-- Lições: 177
+- Módulos: 55 (m01–m55)
+- Lições: 209
 - Testes: 105 (todos passando)
+
+### m50–m51 — B2 Expansion (Advanced Grammar + Style and Register)
+
+- m50: Inversão formal (Never have I / Had I known / Should you), participle clauses (Having finished / Written in...), nominalização (arrival/development/failure), ellipsis e substituição (So do I / Neither have I / I hope so), perguntas embutidas (Could you tell me where... / I wonder whether...), subjuntivo mandativo (It is essential that... be), phrasal verbs B2 (put up with / come up with / carry out / look forward to / rule out)
+- m51: Registo formal vs informal (Latinate verbs vs phrasal verbs), vocabulário de precisão e certeza (bound to / highly likely / it would appear / one might argue), colocações avançadas (carry out / shed light on / raise concerns / reach an agreement), leitura e escuta crítica (argue/claim/concede/challenge/imply/infer, stance, hedging académico)
+
+### m52–m53 — C1 Expansion (Advanced Lexis + Expression and Fluency)
+
+- m52: Idioms C1 (at the eleventh hour, watershed moment, double-edged sword, come full circle, sit on the fence, play devil's advocate, tip of the iceberg, open a can of worms); three-part phrasal verbs (come up against, live up to, put down to, come to terms with, look up to, get away with); advanced collocations (exert pressure, wield influence, bear the brunt, garner support, mount a challenge, brook no dissent, spark controversy, dispel a misconception); advanced article system (the + adjective as noun class, generic reference patterns, zero article vs definite with proper nouns)
+- m53: Formal subjunctive in fixed expressions (as it were, be that as it may, come what may, suffice it to say, far be it from me, lest + subjunctive, so be it); spoken fluency strategies (off the top of my head, floor-holding, buying time, self-correction, complexity signals); word formation C1 (zero-derivation/conversion, complex derivational chains, productive prefixes over-/under-/counter-/mis-/re-, suffixes -ise/-ification/-ity); rhetorical devices (anaphora, antithesis, tricolon, chiasmus, litotes, rhetorical question — identification and production)
+- All C1 content: full English immersion — zero translations
+
+### m54–m55 — C2 Expansion (Language as System + Language, Power and Genre)
+
+- m54 Language as System C2: construções absolutas (present/past participial, with + NP) com vocabulário arcaico produtivo (albeit, hitherto, whereupon, notwithstanding, therein, henceforth, inasmuch as); deixis completa (person/spatial/temporal/discourse deixis) e deictic shift; densidade lexical (ratio conteúdo/total, comparação spoken ≈40% vs academic ≈65%), register blending deliberado e code-switching; metáfora conceptual (ARGUMENT IS WAR, TIME IS MONEY, LIFE IS A JOURNEY, THEORIES ARE BUILDINGS) e extended metaphor — incluindo subversão consciente de frames metafóricos
+- m55 Language, Power and Genre C2: Critical Discourse Analysis — eufemismo por categoria (morte/violência económica/violência política), doublespeak e passiva agentless, vocabulário ideológico e análise de framing; etimologia produtiva — raízes latinas (-fer-/-vert-/-dict-/-scrib-/-port-/-cap-/-cept-/-pon-/-pos-) e gregas (-logy/-graph-/-phon-/-meter/-archy), etymological fallacy; convenções de género textual (obituário, manifesto, op-ed, executive brief) — estrutura, registo e marcadores de género; vocabulário raro e preciso (tendentious, specious, apposite, invidious, putative, ostensible, germane, expedient, venal, inimical); style mimicry como análise e produção
+- Toda a expansão C2: imersão total em inglês — zero traduções

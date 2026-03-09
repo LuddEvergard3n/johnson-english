@@ -1,3 +1,26 @@
+## C2 Expansion
+
+### Added
+- m54 Language as System C2: absolute constructions, archaic register, deixis and deictic shift, lexical density, register blending, code-switching, conceptual metaphor and extended metaphor
+- m55 Language, Power and Genre C2: Critical Discourse Analysis, euphemism and doublespeak, etymology, text genre conventions (obituary/manifesto/op-ed/executive brief), rare precise vocabulary, style mimicry
+
+## C1 Expansion
+
+### Added
+- m52 Advanced Lexis C1: idioms, three-part phrasal verbs, advanced collocations, advanced article system
+- m53 Expression and Fluency C1: formal subjunctive fixed expressions, spoken fluency strategies, word formation C1, rhetorical devices
+
+
+## [Unreleased]
+
+### Removed
+- Coqui TTS server integration (`server/coqui-tts-service/`). Audio system now uses Web Speech API exclusively — no server required, fully compatible with GitHub Pages.
+
+### Changed
+- `audio-engine.js` rewritten: removed server backend, probe logic, throttle, prefetch, cache and `setServerUrl`. Single backend: Web Speech API.
+- `app.js`: removed backend-poll banner. Banner now only shown if Web Speech API is absent in the browser.
+- `tests/audio-tests.js`: removed throttle test (server-only concept).
+
 # Changelog — Johnson English
 
 Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
