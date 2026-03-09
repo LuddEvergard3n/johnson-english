@@ -96,9 +96,12 @@ não por múltipla escolha.
 
 | Nível | CEFR | Módulos | Lições | Capacidade central |
 |---|---|---|---|---|
-| A1 | Iniciante | m01–m06 | 23 | Expressões cotidianas, apresentação, perguntas simples |
-| A2 | Básico | m07–m13 | 26 | Comunicação rotineira, situações reais, narrativa básica |
-| B1 | Intermediário | m14–m20 | 26 | Narrativa, opinião, explicação — usuário independente |
+| A1 | Iniciante | m01–m06, m42–m43 | 31 | Expressões cotidianas, apresentação, perguntas simples |
+| A2 | Básico | m07–m13, m44–m47 | 42 | Comunicação rotineira, situações reais, narrativa básica |
+| B1 | Intermediário | m14–m20, m48–m49 | 34 | Narrativa, opinião, explicação — usuário independente |
+| B2 | Intermediário Superior | m21–m27, m50–m51 | 34 | Argumentação, análise, debate — utilizador independente avançado |
+| C1 | Avançado | m28–m34, m52–m53 | 34 | Precisão discursiva, sofisticação retórica — utilizador proficiente |
+| C2 | Domínio | m35–m41, m54–m55 | 34 | Domínio retórico, pragmático e estilístico — utilizador maestro |
 
 ---
 
@@ -306,6 +309,81 @@ O aluno consegue lidar com autonomia em:
 - Saúde: descrever sintomas, entender prescrições, fazer perguntas ao médico
 
 ---
+
+---
+
+## Perfil Detalhado do Nível C1
+
+### O que distingue C1 de B2
+
+A transição de comunicação analítica para comunicação sofisticada e precisa.
+
+| B2 | C1 |
+|---|---|
+| Argumenta com estrutura e evidência | Argumenta com precisão, hedging e voz crítica |
+| Usa discourse markers corretamente | Seleciona discourse markers por nuance lógica exacta |
+| Escreve ensaios bem estruturados | Produz escrita académica com densidade, coesão e voz autoral |
+| Entende textos complexos | Analisa argumentos, identifica posição e implicações do autor |
+
+### Funções Comunicativas C1
+
+- Argumentar com precisão epistémica (hedging sofisticado)
+- Produzir escrita académica com densidade e voz crítica
+- Controlar registo conscientemente (académico/profissional/informal)
+- Detectar ironia, implicatura e atitude do falante em input denso
+- Usar dispositivos retóricos com deliberação (anáfora, antítese, tricólon)
+- Participar em discussões académicas e seminários
+
+### Gramática C1 — Estruturas Centrais
+
+- Inversão com adverbiais negativos/restritivos (Never have I / Not until / Only after)
+- Cleft sentences (It was X that... / What I need is...)
+- Participle clauses (Having finished / Written in... / Not knowing)
+- Nominalização em prosa académica (decide → decision-making / fail → failure)
+- Passive avançada (is said to / is expected to / it has been suggested)
+- Mixed Conditionals C1 — combinações livres de tempos
+- Modais retrospectivos (should have / needn't have / must have / can't have)
+- Hedging epistémico (to the extent that / insofar as / it would appear that)
+- Subjuntivo formal em expressões fixas (as it were / be that as it may / lest)
+- Construções de elipsis e substituição (I did / some do / others don't)
+
+---
+
+## Perfil Detalhado do Nível C2
+
+### O que distingue C2 de C1
+
+A transição de proficiência para domínio — a língua deixa de ser objecto de atenção e torna-se instrumento de pensamento.
+
+| C1 | C2 |
+|---|---|
+| Argumenta com sofisticação e precisão | Argumenta com estratégia, estilo e controlo prosódico |
+| Controla registo | Blende registos deliberadamente para efeito |
+| Identifica implicatura e atitude | Analisa ideologia, doublespeak e frames discursivos |
+| Usa metáfora e retórica | Analisa sistemas metafóricos; subverte convenções consciente |
+| Escreve com densidade académica | Escreve com as convenções de qualquer género textual |
+
+### Funções Comunicativas C2
+
+- Produzir texto em qualquer género (obituário, manifesto, op-ed, executive brief)
+- Analisar o funcionamento ideológico da linguagem (CDA)
+- Compreender e produzir registo arcaico e literário
+- Explorar a densidade lexical como variável estilística consciente
+- Usar etimologia produtivamente para decodificar vocabulário técnico novo
+- Detectar e produzir subversão de metáforas conceptuais
+- Mimetizar estilos de publicações ou géneros específicos
+
+### Gramática C2 — Estruturas Centrais
+
+- Construções absolutas (participial, preposicional, with + NP)
+- Vocabulário arcaico/literário produtivo (albeit, hitherto, whereupon, notwithstanding, therein, inasmuch as)
+- Sistema deítico completo — escolha deliberada de pessoa, demonstrativos e deictic shift
+- Implicatura conversacional (Grice) e actos de ameaça à face (Brown & Levinson)
+- Ironia, understatement, overstatement — produção e detecção
+- Registo shifting dentro de um único turno ou texto
+- Contrastive stress como dispositivo semântico e pragmático
+- Entoação discursiva (ironia, concessão, suspense, framing retórico)
+
 
 ## Gramática por Nível — Referência Rápida
 

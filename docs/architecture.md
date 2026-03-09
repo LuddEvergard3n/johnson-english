@@ -6,8 +6,7 @@ Johnson English é uma aplicação web de página única (SPA) hospedada no GitH
 Construída com HTML5 puro, CSS3 e ES Modules — sem ferramentas de build,
 sem frameworks, sem transpilação.
 
-de voz via HTTP. O frontend opera completamente sem ele; a Web Speech API nativa do
-navegador entra como fallback automático.
+O áudio usa a **Web Speech API** nativa do browser — zero dependências, zero servidor.
 
 ---
 

@@ -46,9 +46,7 @@ Johnson English — Test Suite
   Failed: 0
 ```
 
-Os testes cobrem: parseabilidade dos JSONs, integridade estrutural de todas as 209 lições
-(A1, A2 e B1), roteamento do SPA, e lógica do motor de áudio. Nenhuma dependência
-externa — apenas stdlib do Node.js.
+Os testes cobrem: parseabilidade dos JSONs, integridade estrutural das lições (A1, A2, B1), roteamento do SPA, e lógica do motor de áudio. Nenhuma dependência externa — apenas stdlib do Node.js.
 
 ---
 
@@ -259,9 +257,7 @@ Se um arquivo se aproximar desse limite, divida por responsabilidade.
 1. Faça push do repositório para o GitHub.
 2. Configurações do repositório → Pages → Source: branch `main`, raiz `/`.
 3. O GitHub Pages servirá `index.html` da raiz do repositório.
-4. Para áudio de alta qualidade: hospede o servidor TTS separadamente
-   e atualize `DEFAULT_TTS_URL` em `js/audio-engine.js`.
-   Sem o servidor, a Web Speech API nativa entra automaticamente como fallback.
+4. Áudio funciona nativamente via Web Speech API do browser — nenhuma configuração adicional necessária.
 
 Ver `docs/audio-system.md` para detalhes de deploy do servidor TTS.
 

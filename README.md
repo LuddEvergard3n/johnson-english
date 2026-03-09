@@ -3,8 +3,16 @@
 Plataforma académica de aprendizado de inglês baseada no método clássico do **Trivium**:
 Gramática (absorção) → Lógica (estrutura) → Retórica (produção).
 
-Parte de um ecossistema educacional ao lado de **Heródoto** (História),
-**Euclides** (Matemática) e **Quintiliano** (Língua Portuguesa).
+Parte de um ecossistema educacional de plataformas académicas:
+
+| Plataforma | Disciplina | Link |
+|---|---|---|
+| **Johnson English** | Língua Inglesa | *(este repositório)* |
+| **[Euclides](https://luddevergard3n.github.io/euclides/)** | Matemática | https://luddevergard3n.github.io/euclides/ |
+| **[Quintiliano](https://luddevergard3n.github.io/quintiliano/)** | Língua Portuguesa e Literatura | https://luddevergard3n.github.io/quintiliano/ |
+| **[Humboldt](https://luddevergard3n.github.io/humboldt/)** | Geografia | https://luddevergard3n.github.io/humboldt/ |
+| **[Heródoto](https://luddevergard3n.github.io/Herodoto/)** | História | https://luddevergard3n.github.io/Herodoto/ |
+| **[Lavoisier](https://luddevergard3n.github.io/lavoisier/)** | Química | https://luddevergard3n.github.io/lavoisier/ |
 
 ---
 
@@ -15,11 +23,6 @@ git clone https://github.com/seu-usuario/johnson-english.git
 cd johnson-english
 python3 -m http.server 8080
 open http://localhost:8080
-```
-
-```bash
-# Opcional: servidor TTS local
-pip install TTS flask flask-cors soundfile numpy
 ```
 
 ```bash
@@ -71,18 +74,6 @@ node tests/test-runner.js
 | m46 | Grammar in Use A2 | Second Conditional, connectors (although/however/despite), preposições compostas, question tags |
 | m47 | Home, Food and Opinions | Casa e moradia, vocabulário de culinária, dar e pedir opiniões, inglês social |
 
-### Módulos B1 (m14–m20)
-
-| ID | Título | Foco |
-|---|---|---|
-| m14 | Experiences and the Past | Present Perfect vs Past Simple |
-| m15 | Stories and Memories | Past Continuous, narrativa integrada |
-| m16 | Plans and Possibilities | Future, First Conditional, modals |
-| m17 | The World Around Us | Passive Voice, Relative Clauses |
-| m18 | How to Express Yourself | Gerund vs Infinitive, Reported Speech B1 |
-| m19 | B1 Real Life | Entrevista, viagem, negociação |
-| m20 | Pronunciation B1 | Word/sentence stress, fala conectada |
-
 ### Módulos B1 (m14–m20, m48–m49)
 
 | ID | Título | Foco |
@@ -123,19 +114,6 @@ node tests/test-runner.js
 | m50 | Advanced Grammar B2 | Inversão formal, Participle clauses, Nominalização, Ellipsis, Perguntas embutidas, Subjuntivo mandativo, Phrasal verbs B2 |
 | m51 | Style and Register B2 | Registo formal/informal, Certeza e probabilidade, Colocações avançadas, Leitura e escuta crítica |
 
-### Módulos C1 — English Only (m28–m34)
-
-| ID | Título | Foco |
-|---|---|---|
-| m28 | Advanced Grammar I | Inversion, cleft sentences, participle clauses, nominalisation |
-| m29 | Advanced Grammar II | Advanced passive, ellipsis/substitution, verb patterns, register |
-| m30 | Conditionals and Modals C1 | Mixed conditionals C1, retrospective modals, hedging, inference |
-| m31 | Discourse and Argument C1 | Discourse markers C1, reported speech C1, academic essay, critical reading |
-| m32 | Language in Use C1 | Collocations C1, vocabulary precision, nominalisation in context |
-| m33 | C1 Real World | Academic discussion, professional writing, cultural commentary |
-| m34 | Pronunciation C1 | Weak forms and connected speech, prosody and register |
-
-
 ### Módulos C1 (m28–m34, m52–m53)
 
 | ID | Título | Foco |
@@ -149,18 +127,6 @@ node tests/test-runner.js
 | m34 | Pronunciation C1 | Formas fracas e fala conectada, Prosódia e registo |
 | m52 | Advanced Lexis C1 | Idioms C1, Phrasal verbs de 3 partes, Colocações avançadas (exert/wield/bear the brunt/garner/brook), Artigos — usos avançados |
 | m53 | Expression and Fluency C1 | Subjuntivo formal em expressões fixas (as it were/be that as it may/lest), Estratégias de fluência oral, Formação de palavras C1, Dispositivos retóricos |
-
-### Módulos C2 — English Only (m35–m41)
-
-| ID | Título | Foco |
-|---|---|---|
-| m35 | Rhetoric and Style C2 | Fronting, rhetorical parallelism, discourse grammar, stylistic control |
-| m36 | Pragmatics and Implicature C2 | Implicature, irony/understatement, politeness strategies, register shifting |
-| m37 | Lexical Mastery C2 | Collocations at scale, idiomatic restraint, emotional precision, abstract vocabulary |
-| m38 | Advanced Writing C2 | Academic writing C2, argument precision, synthesis, revision as craft |
-| m39 | Speaking and Listening C2 | Extended speaking, listening to dense input, debate, improvisation |
-| m40 | C2 Real World | Academic discourse, high-stakes professional English, literary reading, final synthesis |
-| m41 | Pronunciation C2 | Contrastive stress, discourse intonation (irony, concession, suspense) |
 
 ---
 
@@ -218,7 +184,8 @@ A partir de m34 (C1), os campos `pt` em `sound.words` são omitidos.
 
 ## Sistema de Áudio
 
-1. **3. **Fallback silencioso** — degradação sem exceção
+- **Web Speech API** (nativa do browser) — zero dependências, zero configuração
+- **Fallback silencioso** — degradação sem exceção se o browser não suportar
 
 ---
 
@@ -227,9 +194,6 @@ A partir de m34 (C1), os campos `pt` em `sound.words` são omitidos.
 1. Push para repositório GitHub
 2. Settings → Pages → Source: `main`, raiz `/`
 3. URL: `https://usuario.github.io/johnson-english/`
-
----
-
 
 ### Módulos C2 (m35–m41, m54–m55)
 
@@ -245,6 +209,7 @@ A partir de m34 (C1), os campos `pt` em `sound.words` são omitidos.
 | m54 | Language as System C2 | Construções absolutas e registo literário/arcaico (albeit/hitherto/whereupon); deixis e deictic shift; densidade lexical, register blending e code-switching; metáfora conceptual e extended metaphor |
 | m55 | Language, Power and Genre C2 | CDA — eufemismo, doublespeak e linguagem do poder; etimologia e redes de raízes produtivas; convenções de género textual (obituário/manifesto/op-ed/briefing); vocabulário raro (tendentious/specious/apposite/expedient); style mimicry |
 
+---
 
 ## Licença
 
