@@ -184,6 +184,20 @@ main#app-root {
   color: var(--color-text-secondary);
 }
 
+.ecosystem-list a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.ecosystem-list a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.footer-eco-link {
+  color: var(--color-text-muted);
+}
+
 /* -----------------------------------------------------------------------------
    5. PAGE CONTAINERS
    Reusable content containers with consistent max-width and padding.
@@ -1226,4 +1240,651 @@ main#app-root {
   margin: 0;
   padding-top: var(--space-1);
   border-top: 1px solid var(--color-border-light);
+}
+
+/* =============================================================================
+   ADDITIONS — About, Teacher Guide, Lesson Plan Generator
+   Added: 2026-03-11
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   A. ABOUT PAGE — metrics grid + ecosystem block
+   ----------------------------------------------------------------------------- */
+
+.about-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-4);
+  margin: var(--space-6) 0;
+}
+
+.metric-card {
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+}
+
+.metric-value {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  color: var(--color-accent);
+  line-height: 1.1;
+  margin-bottom: var(--space-1);
+}
+
+.metric-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.about-epigraph {
+  border-left: 3px solid var(--color-border);
+  padding: var(--space-3) var(--space-5);
+  margin: var(--space-6) 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.about-epigraph cite {
+  display: block;
+  font-size: var(--text-sm);
+  margin-top: var(--space-2);
+  font-style: normal;
+  color: var(--color-text-muted);
+}
+
+.about-section-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  color: var(--color-text-primary);
+  border-bottom: var(--border-width) solid var(--color-border-light);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+/* Ecosystem footer — full-width dark band */
+.ecosystem-band {
+  background: var(--color-accent);
+  margin-top: var(--space-12);
+  padding: var(--space-10) var(--space-6);
+}
+
+.ecosystem-band-inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.ecosystem-band-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+  margin-bottom: var(--space-6);
+  letter-spacing: 0.04em;
+}
+
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+}
+
+.eco-card {
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.05);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  text-decoration: none;
+  color: rgba(255,255,255,0.8);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+  display: block;
+}
+
+.eco-card:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.35);
+  color: var(--color-text-inverse);
+}
+
+.eco-card--active {
+  border-color: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.10);
+  cursor: default;
+  pointer-events: none;
+  color: var(--color-text-inverse);
+}
+
+.eco-name {
+  font-family: var(--font-serif);
+  font-size: var(--text-md);
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+.eco-subject {
+  font-size: var(--text-xs);
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* -----------------------------------------------------------------------------
+   B. TEACHER GUIDE — sidebar + content layout
+   ----------------------------------------------------------------------------- */
+
+.guide-layout {
+  display: flex;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+  gap: var(--space-8);
+  align-items: flex-start;
+}
+
+.guide-sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+}
+
+.guide-sidebar-panel {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-4));
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.guide-sidebar-title {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  padding: var(--space-3) var(--space-4) var(--space-2);
+  border-bottom: var(--border-width) solid var(--color-border-light);
+}
+
+.guide-nav-group {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-muted);
+  padding: var(--space-3) var(--space-4) var(--space-1);
+}
+
+.guide-nav-link {
+  display: block;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.guide-nav-link:hover {
+  color: var(--color-accent);
+  background: var(--color-accent-bg);
+  border-left-color: var(--color-accent);
+}
+
+.guide-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.guide-content h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  color: var(--color-text-primary);
+  border-bottom: var(--border-width) solid var(--color-border-light);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-5);
+  scroll-margin-top: calc(var(--header-height) + var(--space-6));
+}
+
+.guide-content h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: var(--color-accent);
+  margin: var(--space-6) 0 var(--space-3);
+}
+
+.guide-content p {
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-loose);
+}
+
+.guide-section {
+  margin-bottom: var(--space-12);
+}
+
+/* Activity cards */
+.activity-card {
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--space-6);
+}
+
+.activity-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--color-bg-alt);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.activity-num {
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.activity-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-md);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.activity-body {
+  padding: var(--space-5);
+}
+
+.activity-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.meta-tag {
+  display: inline-block;
+  background: var(--color-accent-bg);
+  border: var(--border-width) solid #c5d8ec;
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+}
+
+/* Callout blocks */
+.callout {
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: var(--space-3) var(--space-5);
+  margin: var(--space-4) 0;
+  font-size: var(--text-sm);
+  line-height: var(--line-height-normal);
+}
+
+.callout--note {
+  background: var(--color-warning-bg);
+  border-left: 3px solid var(--color-warning);
+  color: #5a4400;
+}
+
+.callout--info {
+  background: var(--color-accent-bg);
+  border-left: 3px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+.callout--tip {
+  background: #f0fdf4;
+  border-left: 3px solid var(--color-success);
+  color: #1a4731;
+}
+
+/* Level badges */
+.level-badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-right: var(--space-1);
+}
+
+.level-badge--a { background: #e8f4e8; color: #2d6a4f; border: 1px solid #a3d9b8; }
+.level-badge--b { background: var(--color-accent-bg); color: var(--color-accent); border: 1px solid #c5d8ec; }
+.level-badge--c { background: #f5f0ff; color: #5b21b6; border: 1px solid #d8c8f8; }
+
+/* Skill tables inside guide */
+.skill-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  margin: var(--space-4) 0;
+}
+
+.skill-table th {
+  background: var(--color-bg-alt);
+  font-weight: 600;
+  text-align: left;
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.skill-table td {
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-width) solid var(--color-border-light);
+  vertical-align: top;
+  color: var(--color-text-secondary);
+}
+
+.skill-table tr:nth-child(even) td {
+  background: var(--color-bg);
+}
+
+/* -----------------------------------------------------------------------------
+   C. LESSON PLAN GENERATOR — two-panel layout
+   ----------------------------------------------------------------------------- */
+
+.plan-layout {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+  align-items: start;
+}
+
+.plan-form-panel {
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.plan-form-header {
+  background: var(--color-accent);
+  padding: var(--space-4) var(--space-5);
+  color: var(--color-text-inverse);
+}
+
+.plan-form-header h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: var(--color-text-inverse);
+  margin: 0;
+}
+
+.plan-form-header p {
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.7);
+  margin: var(--space-1) 0 0;
+}
+
+.plan-form-body {
+  padding: var(--space-5);
+}
+
+.plan-section-title {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin: var(--space-5) 0 var(--space-3);
+  padding-bottom: var(--space-1);
+  border-bottom: var(--border-width) solid var(--color-border-light);
+}
+
+.plan-section-title:first-child { margin-top: 0; }
+
+/* Grid rows */
+.plan-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.plan-row--3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.plan-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.plan-field label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  min-height: 2em;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 2px;
+}
+
+.plan-field input,
+.plan-field select,
+.plan-field textarea {
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  transition: border-color var(--transition-fast);
+  width: 100%;
+}
+
+.plan-field input:focus,
+.plan-field select:focus,
+.plan-field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.plan-field input[readonly] {
+  background: var(--color-bg-alt);
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+.plan-field textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* Checkbox panel */
+.checkbox-panel {
+  background: var(--color-bg);
+  border: var(--border-width) solid var(--color-border-light);
+  border-radius: var(--radius);
+  max-height: 180px;
+  overflow-y: auto;
+  padding: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.checkbox-panel .plan-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.checkbox-panel .plan-item:hover {
+  background: var(--color-accent-bg);
+}
+
+.checkbox-panel .plan-item input[type="checkbox"] {
+  width: auto;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--color-accent);
+}
+
+.checkbox-panel .plan-item label {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  min-height: unset;
+  padding: 0;
+  line-height: 1.4;
+}
+
+.plan-placeholder {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-style: italic;
+  padding: var(--space-3);
+  text-align: center;
+}
+
+.plan-actions {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-top: var(--border-width) solid var(--color-border-light);
+}
+
+/* Preview panel */
+.plan-preview-panel {
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-4));
+}
+
+.plan-preview-header {
+  background: var(--color-bg-alt);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: var(--border-width) solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plan-preview-header h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+#plan-doc {
+  padding: var(--space-8) var(--space-8);
+  min-height: 300px;
+}
+
+#plan-doc .plan-empty {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-style: italic;
+  text-align: center;
+  padding: var(--space-12) 0;
+}
+
+/* Document output styles */
+.doc-header { margin-bottom: var(--space-6); }
+.doc-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+}
+.doc-meta { font-size: var(--text-sm); color: var(--color-text-muted); }
+
+.doc-section {
+  margin-bottom: var(--space-5);
+}
+
+.doc-section-label {
+  display: inline-block;
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-2);
+}
+
+.doc-section-content {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--color-border);
+}
+
+.doc-section-content ul {
+  list-style: disc;
+  padding-left: var(--space-5);
+}
+
+.doc-section-content li {
+  margin-bottom: var(--space-1);
+}
+
+.doc-divider {
+  border: none;
+  border-top: var(--border-width) solid var(--color-border-light);
+  margin: var(--space-5) 0;
+}
+
+.doc-id-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  padding: var(--space-4);
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--color-border-light);
+}
+
+.doc-id-item { font-size: var(--text-sm); }
+.doc-id-item strong { display: block; font-size: var(--text-xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
+
+/* Print styles */
+@media print {
+  body { background: white !important; }
+  #site-header, #breadcrumb, .plan-form-panel, .plan-preview-header, #site-footer { display: none !important; }
+  .plan-layout { display: block !important; padding: 0 !important; }
+  .plan-preview-panel { position: static !important; border: none !important; box-shadow: none !important; }
+  #plan-doc { padding: 1.5cm 2cm !important; font-size: 10pt !important; }
+  .doc-section-label { background: var(--color-accent) !important; color: white !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 980px) {
+  .plan-layout {
+    grid-template-columns: 1fr;
+  }
+  .plan-preview-panel { position: static; }
+}
+
+@media (max-width: 860px) {
+  .guide-layout { flex-direction: column; }
+  .guide-sidebar { width: 100%; }
+  .guide-sidebar-panel { position: static; }
 }

@@ -26,7 +26,9 @@ import { LevelsView }  from './components/levels-view.js';
 import { ModuleView }  from './components/module-view.js';
 import { LessonView }              from './components/lesson-view.js';
 import { PronunciationLessonView } from './components/pronunciation-lesson-view.js';
-import { AboutView }   from './components/about-view.js';
+import { AboutView }        from './components/about-view.js';
+import { TeacherGuideView } from './components/teacher-guide-view.js';
+import { LessonPlanView }   from './components/lesson-plan-view.js';
 import { NotFoundView } from './components/not-found-view.js';
 
 export const Router = (() => {
@@ -45,6 +47,8 @@ export const Router = (() => {
     'module': ModuleView.render,   /* #/module/{levelId}/{moduleId}  → lesson list */
     'lesson': _lessonDispatcher,   /* #/lesson/{levelId}/{moduleId}/{lessonId} — despacha por tipo */
     'about':  AboutView.render,
+    'guia':   TeacherGuideView.render,
+    'plano':  LessonPlanView.render,
   };
 
   /** @type {HTMLElement} */
@@ -210,6 +214,10 @@ export const Router = (() => {
     }
     if (route === '' || route === 'home') {
       HomeView.hydrate({ state, audio });
+    }
+    if (route === 'plano') {
+      const { LessonPlanEngine } = await import('./modules/lesson-plan/lesson-plan-engine.js');
+      LessonPlanEngine.hydrate();
     }
   }
 

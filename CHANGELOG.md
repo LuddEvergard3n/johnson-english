@@ -6,7 +6,54 @@ Versões mais recentes primeiro.
 
 ---
 
-## [1.9.3] — 2026-03-09
+## [2.0.0] — 2026-03-11
+
+### Adicionado — Três novas seções e ecossistema completo
+
+**Guia do Professor (`#/guia`)**
+- Nova rota e view `teacher-guide-view.js` — layout sidebar (260px sticky) + conteúdo longo
+- Navegação por âncoras com 10 destinos: método Trivium, estrutura de lição, imersão progressiva, 5 actividades práticas, orientações por nível, limitações
+- 5 actividades práticas com cards estruturados (número, título, nível, duração, modo, variante): Shadowing em Dupla, Gramática Induzida, Produção Guiada em Cadeia, Debate por Nível, Pronúncia em Foco
+- Tabela de estrutura das 6 seções de uma lição normal vs lições de pronúncia
+- Tabela de política de imersão (A1–B2 em português, C1–C2 em inglês)
+- Callouts (.callout--tip/.callout--note/.callout--info) para estratégias e avisos
+- Badges de nível (A/B/C) nas actividades
+
+**Gerador de Plano de Aula (`#/plano`)**
+- Nova rota, view `lesson-plan-view.js` (layout dois painéis: formulário 460px + preview 1fr) e engine `lesson-plan-engine.js`
+- Formulário: professor, turma, data, nível CEFR, duração, habilidade principal, tema
+- Carga horária calculada automaticamente: Nº de aulas × duração, formatada como Xh ou XhYYmin
+- Objetivos e atividades dinâmicos: checkboxes renderizados em função do nível CEFR selecionado (6 níveis × dois conjuntos de presets)
+- Recursos e avaliação: checkboxes fixos (independentes de nível)
+- Campos de texto livre ("Adicionar livremente") em todas as secções
+- Geração de documento: HTML estruturado na preview com labels, grelha de identificação, listas de itens
+- Impressão/PDF: `window.print()` com `@media print` completo (oculta formulário e UI, margem de página, `print-color-adjust: exact`)
+
+**Sobre (`#/about`) — reescrito**
+- Epígrafe de Samuel Johnson (1755)
+- Grid de 6 métricas: 209 lições, 55 módulos, 6 níveis CEFR, A1–C2, 3 etapas/lição, 0 dependências
+- Badge de versão inline no título das métricas
+- Secção de imersão progressiva (nova)
+- Secção "O Nome" expandida com contexto histórico do Dictionary
+- Notas técnicas actualizadas (Web Speech API, sem Coqui)
+- Secção de ecossistema educacional: band escura com eco-cards para todos os 7 projectos
+
+**Ecossistema — Archimedes adicionado**
+- Archimedes (Física e Ciências) adicionado a: about-view.js, README.md, index.html footer
+- Repositório: https://github.com/LuddEvergard3n/archimedes
+- Site: https://luddevergard3n.github.io/archimedes/
+- Footer do index.html reescrito com links clicáveis para todos os 6 projectos irmãos
+
+### Alterado
+- `index.html`: navegação expandida de 3 para 5 itens (+ Guia do Professor, + Plano de Aula)
+- `index.html`: footer com links externos para todas as plataformas do ecossistema
+- `js/router.js`: rotas `guia` e `plano` adicionadas; hydration de `LessonPlanEngine` em `_hydrateView`
+- `css/layout.css`: +650 linhas de novos componentes (about metrics, ecosystem band, guide layout, activity cards, plan layout, print styles)
+- `docs/architecture.md`: tabela de rotas e estrutura de ficheiros actualizadas
+- `README.md`: tabela do ecossistema expandida com colunas Repositório + Site para todos os 7 projectos
+
+---
+
 
 ### Alterado
 - README.md: tabela do ecossistema educacional completa com links GitHub Pages para todas as cinco plataformas (Euclides, Quintiliano, Humboldt, Heródoto, Lavoisier)

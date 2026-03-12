@@ -5,14 +5,15 @@ Gramática (absorção) → Lógica (estrutura) → Retórica (produção).
 
 Parte de um ecossistema educacional de plataformas académicas:
 
-| Plataforma | Disciplina | Link |
-|---|---|---|
-| **Johnson English** | Língua Inglesa | *(este repositório)* |
-| **[Euclides](https://luddevergard3n.github.io/euclides/)** | Matemática | https://luddevergard3n.github.io/euclides/ |
-| **[Quintiliano](https://luddevergard3n.github.io/quintiliano/)** | Língua Portuguesa e Literatura | https://luddevergard3n.github.io/quintiliano/ |
-| **[Humboldt](https://luddevergard3n.github.io/humboldt/)** | Geografia | https://luddevergard3n.github.io/humboldt/ |
-| **[Heródoto](https://luddevergard3n.github.io/Herodoto/)** | História | https://luddevergard3n.github.io/Herodoto/ |
-| **[Lavoisier](https://luddevergard3n.github.io/lavoisier/)** | Química | https://luddevergard3n.github.io/lavoisier/ |
+| Plataforma | Disciplina | Repositório | Site |
+|---|---|---|---|
+| **Johnson English** | Língua Inglesa | [github.com/LuddEvergard3n/johnson-english](https://github.com/LuddEvergard3n/johnson-english) | *(este site)* |
+| **[Heródoto](https://luddevergard3n.github.io/Herodoto/)** | História | [github.com/LuddEvergard3n/Herodoto](https://github.com/LuddEvergard3n/Herodoto) | https://luddevergard3n.github.io/Herodoto/ |
+| **[Euclides](https://luddevergard3n.github.io/euclides/)** | Matemática | [github.com/LuddEvergard3n/euclides](https://github.com/LuddEvergard3n/euclides) | https://luddevergard3n.github.io/euclides/ |
+| **[Quintiliano](https://luddevergard3n.github.io/quintiliano/)** | Língua Portuguesa e Literatura | [github.com/LuddEvergard3n/quintiliano](https://github.com/LuddEvergard3n/quintiliano) | https://luddevergard3n.github.io/quintiliano/ |
+| **[Lavoisier](https://luddevergard3n.github.io/lavoisier/)** | Química | [github.com/LuddEvergard3n/lavoisier](https://github.com/LuddEvergard3n/lavoisier) | https://luddevergard3n.github.io/lavoisier/ |
+| **[Humboldt](https://luddevergard3n.github.io/humboldt/)** | Geografia | [github.com/LuddEvergard3n/humboldt](https://github.com/LuddEvergard3n/humboldt) | https://luddevergard3n.github.io/humboldt/ |
+| **[Archimedes](https://luddevergard3n.github.io/archimedes/)** | Física e Ciências | [github.com/LuddEvergard3n/archimedes](https://github.com/LuddEvergard3n/archimedes) | https://luddevergard3n.github.io/archimedes/ |
 
 ---
 

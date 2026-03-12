@@ -36,7 +36,9 @@ johnson-english/
 │   │   ├── module-view.js
 │   │   ├── lesson-view.js             Renderizador de lições normais
 │   │   ├── pronunciation-lesson-view.js  Renderizador de lições de pronúncia
-│   │   ├── about-view.js
+│   │   ├── about-view.js              Página Sobre (métricas, método, ecossistema)
+│   │   ├── teacher-guide-view.js      Guia do Professor (sidebar + actividades)
+│   │   ├── lesson-plan-view.js        Gerador de Plano de Aula (HTML/layout)
 │   │   ├── not-found-view.js
 │   │   └── feedback-engine.js         Helper de UI para feedback de exercícios
 │   │
@@ -47,8 +49,10 @@ johnson-english/
 │       │   └── logic-engine.js        Etapa de Lógica (Prática)
 │       ├── rhetoric/
 │       │   └── rhetoric-engine.js     Etapa de Retórica (Produção)
-│       └── pronunciation/
-│           └── pronunciation-engine.js  Lições de pronúncia (type: "pronunciation")
+│       ├── pronunciation/
+│       │   └── pronunciation-engine.js  Lições de pronúncia (type: "pronunciation")
+│       └── lesson-plan/
+│           └── lesson-plan-engine.js  Interactividade do Gerador de Plano de Aula
 │
 ├── data/
 │   ├── levels.json             Definições de nível CEFR (A1–C2)
@@ -183,6 +187,8 @@ AudioEngine.hydrateAudioButtons({ levelId, moduleId, lessonId, state });
 | `#/level/a1` | Módulos do A1 |
 | `#/module/a1/m01` | Lições do A1/M01 |
 | `#/lesson/a1/m01/l01` | Lição A1/M01/L01 |
+| `#/guia` | Guia do Professor |
+| `#/plano` | Gerador de Plano de Aula |
 | `#/about` | Sobre |
 
 Roteamento por hash é utilizado em vez da History API porque o GitHub Pages
