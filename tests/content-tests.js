@@ -224,6 +224,34 @@ async function run({ describe, it, assert }) {
       });
     });
 
+    it('fill-blank exercises with multiple [BLANK] provide a matching answers array', () => {
+      /*
+       * Um prompt com N [BLANK] precisa validar N respostas. Um único campo
+       * `answer` compartilhado por todos os blanks só é correto quando a
+       * resposta é literalmente idêntica em cada lacuna (ex.: "was"/"was").
+       * Quando as lacunas exigem palavras diferentes, o exercício deve
+       * declarar `answers` como array com exatamente N itens.
+       */
+      lessons.forEach((lesson) => {
+        (lesson.practice || [])
+          .filter((ex) => ex.type === 'fill-blank')
+          .forEach((ex, i) => {
+            const blankCount = (ex.prompt.match(/\[BLANK\]/g) || []).length;
+            if (blankCount <= 1 || ex.answers === undefined) return;
+            assert(
+              Array.isArray(ex.answers) && ex.answers.length === blankCount,
+              `Lesson "${lesson.id}" fill-blank[${i}] has ${blankCount} [BLANK] but answers array has ${Array.isArray(ex.answers) ? ex.answers.length : 'n/a'} items`
+            );
+            ex.answers.forEach((a, j) => {
+              assert(
+                typeof a === 'string' && a.trim().length > 0,
+                `Lesson "${lesson.id}" fill-blank[${i}] answers[${j}] must be a non-empty string`
+              );
+            });
+          });
+      });
+    });
+
     it('reorder exercises have words array and answer', () => {
       lessons.forEach((lesson) => {
         (lesson.practice || [])

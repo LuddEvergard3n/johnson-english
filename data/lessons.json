@@ -2240,7 +2240,11 @@
       {
         "type": "fill-blank",
         "prompt": "I [BLANK] swim, but I [BLANK] drive. (posso/não posso)",
-        "answer": "can"
+        "answer": "can",
+        "answers": [
+          "can",
+          "can't"
+        ]
       },
       {
         "type": "fill-blank",
@@ -5842,12 +5846,20 @@
       {
         "type": "fill-blank",
         "prompt": "I usually [BLANK] coffee, but today I [BLANK] tea. (drink/drink)",
-        "answer": "drink"
+        "answer": "drink",
+        "answers": [
+          "drink",
+          "am drinking"
+        ]
       },
       {
         "type": "fill-blank",
         "prompt": "She [BLANK] in Brasília, but she [BLANK] in São Paulo this week. (live/stay)",
-        "answer": "lives"
+        "answer": "lives",
+        "answers": [
+          "lives",
+          "is staying"
+        ]
       },
       {
         "type": "reorder",
@@ -5861,11 +5873,11 @@
           "work",
           "working",
           "in",
-          "I",
-          "am",
-          "I'm"
+          "I'm",
+          "from",
+          "I"
         ],
-        "answer": "I work in the office but today I'm working home"
+        "answer": "I work in the office but today I'm working from home"
       }
     ],
     "production": [
@@ -8027,13 +8039,14 @@
         "type": "reorder",
         "prompt": "Forme a abertura narrativa:",
         "words": [
-          "evening",
-          "a",
-          "sitting",
+          "It",
           "was",
-          "I",
+          "a",
           "dark",
-          "in",
+          "evening",
+          "I",
+          "was",
+          "sitting",
           "on",
           "the",
           "bench"
@@ -8184,7 +8197,8 @@
           "I",
           "when",
           "got",
-          "lost"
+          "lost",
+          "I"
         ],
         "answer": "I've been to Japan when I was exploring I got lost"
       }
@@ -8468,7 +8482,7 @@
         "prompt": "Forme o First Conditional:",
         "words": [
           "we'll",
-          "it",
+          "we",
           "miss",
           "Unless",
           "now",
@@ -11220,6 +11234,7 @@
           "studying",
           "been",
           "she",
+          "she",
           "all",
           "night",
           "tired",
@@ -11365,6 +11380,7 @@
           "had",
           "published",
           "been",
+          "they",
           "they",
           "preparing",
           "what",
@@ -11664,7 +11680,8 @@
           "have",
           "got",
           "the",
-          "job"
+          "job",
+          "If"
         ],
         "answer": "If I had applied earlier I might have got the job"
       }
@@ -11813,7 +11830,8 @@
           "a",
           "I",
           "be",
-          "happier"
+          "happier",
+          "If"
         ],
         "answer": "If I had chosen a different career I would be happier now"
       }
@@ -13260,7 +13278,6 @@
         "words": [
           "contrast",
           "By",
-          "are",
           "conventional",
           "stagnated",
           "methods",
@@ -13409,7 +13426,6 @@
           "this",
           "it",
           "is",
-          "to",
           "overlooks",
           "key",
           "evidence"
@@ -13561,7 +13577,8 @@
           "Geneva",
           "agreement",
           "the",
-          "signed"
+          "signed",
+          "was"
         ],
         "answer": "The summit at which the agreement was signed was held in Geneva"
       }
@@ -14281,7 +14298,6 @@
         "type": "reorder",
         "prompt": "Forme a frase de debate polido:",
         "words": [
-          "I",
           "respect",
           "data",
           "With",
@@ -14959,7 +14975,8 @@
           "its",
           "conclusions",
           "data",
-          "the"
+          "the",
+          "revised"
         ],
         "answer": "Having revised the data the team revised its conclusions"
       }
@@ -15346,7 +15363,6 @@
           "others",
           "the",
           "motion",
-          "did",
           "not"
         ],
         "answer": "Some supported the motion others did not"
@@ -15476,7 +15492,8 @@
           "CEO",
           "her",
           "board",
-          "resignation"
+          "resignation",
+          "the"
         ],
         "answer": "The board persuaded the CEO to withdraw her resignation"
       }
@@ -15727,7 +15744,6 @@
         "type": "reorder",
         "prompt": "Construct the inverted mixed conditional:",
         "words": [
-          "been",
           "acted",
           "organisation",
           "not",
@@ -15736,7 +15752,8 @@
           "the",
           "would",
           "be",
-          "struggling"
+          "struggling",
+          "they"
         ],
         "answer": "Had they acted sooner the organisation would not be struggling"
       }
@@ -17169,7 +17186,9 @@
           "policy",
           "is",
           "effects",
-          "qualify"
+          "qualify",
+          "I'd",
+          "the"
         ],
         "answer": "I'd argue that the policy is broadly sound though I'd qualify the effects"
       }
@@ -17559,7 +17578,8 @@
           "the",
           "content",
           "not",
-          "but"
+          "but",
+          "is"
         ],
         "answer": "What is analytically significant is not the content but the framing choices"
       }
@@ -17691,7 +17711,8 @@
           "evidence",
           "is",
           "causation",
-          "complex"
+          "complex",
+          "is"
         ],
         "answer": "Having examined the evidence what seems clear is that causation is complex"
       }
@@ -18973,7 +18994,8 @@
           "from",
           "simply",
           "working",
-          "it's"
+          "it's",
+          "The"
         ],
         "answer": "The outcome deviates from projected Put simply it's not working"
       }
@@ -19742,7 +19764,8 @@
           "objection",
           "core",
           "survives",
-          "claim"
+          "claim",
+          "the"
         ],
         "answer": "Even granting the objection the core claim survives"
       }
@@ -19872,7 +19895,10 @@
           "different",
           "operate",
           "levels",
-          "at"
+          "at",
+          "the",
+          "if",
+          "we"
         ],
         "answer": "The tension dissolves if we recognise the accounts operate at different levels"
       }
@@ -19994,15 +20020,13 @@
         "type": "reorder",
         "prompt": "Revise to remove inflated nominalisation:",
         "words": [
-          "decision",
           "The",
-          "came",
-          "reject",
           "committee",
+          "decided",
           "to",
+          "reject",
           "the",
-          "proposal",
-          "to"
+          "proposal"
         ],
         "answer": "The committee decided to reject the proposal"
       }
@@ -20131,8 +20155,7 @@
           "in",
           "want",
           "this",
-          "to",
-          "make"
+          "to"
         ],
         "answer": "I want to argue this in two steps"
       }
@@ -20392,7 +20415,8 @@
           "talking",
           "other",
           "let",
-          "me"
+          "me",
+          "the"
         ],
         "answer": "We're talking past each other let me locate the disagreement"
       }
@@ -21558,10 +21582,9 @@
         "prompt": "Monte a frase:",
         "words": [
           "summer",
-          "it",
+          "it's",
           "In",
           "hot",
-          "'s",
           "very"
         ],
         "answer": "In summer it's very hot"
@@ -21849,8 +21872,7 @@
           "My",
           "is",
           "Luna",
-          "cat",
-          "'s"
+          "cat's"
         ],
         "answer": "My cat's name is Luna"
       }
@@ -25920,13 +25942,13 @@
           "While",
           "that",
           "expensive",
-          "is",
           "I",
           "think",
           "it's",
           "still",
           "worth",
-          "it"
+          "it",
+          "it's"
         ],
         "answer": "While it's true that it's expensive I still think it's worth it"
       }
@@ -26068,7 +26090,7 @@
           "the",
           "Rarely",
           "committee",
-          "agrees",
+          "agree",
           "does",
           "unanimously"
         ],
@@ -26502,7 +26524,6 @@
           "that",
           "recommends",
           "the",
-          "the",
           "committee",
           "proposal",
           "be",
@@ -26792,7 +26813,7 @@
         "prompt": "Monte a frase académica:",
         "words": [
           "that",
-          "appears",
+          "appear",
           "It",
           "the",
           "would",
@@ -27487,7 +27508,8 @@
           "that",
           "correlation",
           "implies",
-          "causation"
+          "causation",
+          "the"
         ],
         "answer": "The study dispels the common misconception that correlation implies causation"
       }
@@ -28145,7 +28167,6 @@
         "prompt": "Build the antithesis:",
         "words": [
           "the",
-          "of",
           "The",
           "but",
           "answer",
@@ -28153,7 +28174,9 @@
           "not",
           "changing",
           "is",
-          "response"
+          "response",
+          "changing",
+          "the"
         ],
         "answer": "The answer is not changing the facts but changing the response"
       }
@@ -28412,12 +28435,12 @@
           "approach",
           "that",
           "but",
-          "endorses",
           "this",
           "mine",
           "is",
           "theirs",
-          "is"
+          "is",
+          "approach"
         ],
         "answer": "This approach is mine but that approach is theirs"
       }
@@ -28674,7 +28697,6 @@
         "type": "reorder",
         "prompt": "Build the sentence about metaphor analysis:",
         "words": [
-          "the",
           "reveals",
           "Extending",
           "a",
@@ -29078,7 +29100,9 @@
           "74",
           "on",
           "8",
-          "Sousa"
+          "Sousa",
+          "the",
+          "form"
         ],
         "answer": "Maria Sousa whose photography redefined the form died on 8 March aged 74"
       }
@@ -29205,7 +29229,6 @@
         "words": [
           "tendentious",
           "framing",
-          "systematic",
           "The",
           "of",
           "was",

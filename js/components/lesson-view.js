@@ -12,21 +12,9 @@
  * independentemente do atributo type.
  */
 
+import { escapeHtml as _escape, escapeAttr as _escapeAttr } from '../utils/html-safety.js';
+
 export const LessonView = (() => {
-  function _escape(str) {
-    return String(str)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
-  /**
-   * Escapa uma string para uso seguro dentro de um atributo HTML.
-   * Mais restrito que _escape: também escapa aspas simples.
-   */
-  function _escapeAttr(str) {
-    return _escape(str).replace(/'/g, '&#39;');
-  }
-
   async function render({ params, state }) {
     const [levelId, moduleId, lessonId] = params;
 
@@ -336,17 +324,47 @@ export const LessonView = (() => {
          spellcheck="false"
        />`
     );
+    /*
+     * `answers` (array, opcional) cobre o caso de duas ou mais lacunas no
+     * mesmo prompt que exigem palavras diferentes (ex.: "can" / "can't").
+     * Quando ausente, `answer` (string única) é usado para todas as
+     * lacunas — correto apenas quando a resposta é literalmente a mesma
+     * em cada uma (ex.: "was" / "was").
+     */
+    const answersAttr = Array.isArray(ex.answers)
+      ? `data-answers="${_escapeAttr(JSON.stringify(ex.answers))}"`
+      : '';
     return `
-      <div class="exercise" id="${id}" data-type="fill-blank" data-answer="${_escapeAttr(ex.answer)}">
+      <div class="exercise" id="${id}" data-type="fill-blank" data-answer="${_escapeAttr(ex.answer)}" ${answersAttr}>
         <p class="exercise-prompt">${promptHtml}</p>
         <button class="btn btn--secondary btn--check" data-exercise="${id}">Verificar</button>
         <div class="exercise-feedback" aria-live="polite"></div>
       </div>`;
   }
 
+  /**
+   * Embaralha um array com o algoritmo Fisher-Yates (uniforme).
+   * Não modifica o array de entrada.
+   *
+   * `array.sort(() => Math.random() - 0.5)` foi evitado de propósito: esse
+   * padrão comum produz uma distribuição enviesada, porque a ordem final
+   * depende da implementação de sort do motor JS, não apenas do sorteio.
+   *
+   * @param {Array} array
+   * @returns {Array}
+   */
+  function _shuffle(array) {
+    const result = [...array];
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
+  }
+
   function _renderReorder(ex, id) {
     const words    = ex.words || [];
-    const shuffled = [...words].sort(() => Math.random() - 0.5);
+    const shuffled = _shuffle(words);
 
     const wordButtons = shuffled.map((w, i) => `
       <button
@@ -357,7 +375,7 @@ export const LessonView = (() => {
       >${_escape(w)}</button>`).join('');
 
     return `
-      <div class="exercise" id="${id}" data-type="reorder" data-answer="${_escapeAttr(ex.words.join(' '))}">
+      <div class="exercise" id="${id}" data-type="reorder" data-answer="${_escapeAttr(ex.answer)}">
         <p class="exercise-prompt">${_escape(ex.prompt)}</p>
         <div class="reorder-bank" data-exercise="${id}">
           ${wordButtons}

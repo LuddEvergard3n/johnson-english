@@ -13,17 +13,9 @@
  * Não tem seção de Prática (exercícios de lacuna/reorder não se aplicam).
  */
 
+import { escapeHtml as _escape, escapeAttr as _escapeAttr } from '../utils/html-safety.js';
+
 export const PronunciationLessonView = (() => {
-  function _escape(str) {
-    return String(str)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
-  function _escapeAttr(str) {
-    return _escape(str).replace(/'/g, '&#39;');
-  }
-
   async function render({ params, state }) {
     const [levelId, moduleId, lessonId] = params;
 
@@ -175,7 +167,7 @@ export const PronunciationLessonView = (() => {
               >&#9654;</button>
               <div class="word-audio-text">
                 <strong class="word-en" lang="en">${_escape(w.en)}</strong>
-                <span class="word-pt">${_escape(w.pt)}</span>
+                ${w.pt ? `<span class="word-pt">${_escape(w.pt)}</span>` : ''}
               </div>
               <span class="audio-status" aria-live="polite"></span>
             </div>`).join('')}

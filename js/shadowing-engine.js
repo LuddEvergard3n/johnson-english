@@ -7,6 +7,8 @@
  */
 
 import { AudioEngine } from './audio-engine.js';
+import { escapeHtml as _escape } from './utils/html-safety.js';
+import { FeedbackEngine } from './components/feedback-engine.js';
 
 export const ShadowingEngine = (() => {
   let _sentences  = [];
@@ -20,7 +22,7 @@ export const ShadowingEngine = (() => {
     const sentence    = _sentences[_current];
     const isLast      = _current === _sentences.length - 1;
     const total       = _sentences.length;
-    const progressPct = Math.round((_current / total) * 100);
+    const progressPct = Math.round(((_current + 1) / total) * 100);
 
     _container.innerHTML = `
       <div class="shadowing-panel">
@@ -108,18 +110,8 @@ export const ShadowingEngine = (() => {
 
     finishBtn?.addEventListener('click', () => {
       if (_onComplete) _onComplete();
-      _container.innerHTML = `
-        <div class="feedback-message feedback-message--correct">
-          <span class="feedback-icon">&#10003;</span>
-          <span>Repetição concluída. Todas as frases foram praticadas.</span>
-        </div>`;
+      FeedbackEngine.showCorrect(_container, 'Repetição concluída. Todas as frases foram praticadas.');
     });
-  }
-
-  function _escape(str) {
-    return String(str)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
   return {

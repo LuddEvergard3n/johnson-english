@@ -30,6 +30,25 @@ import { AboutView }        from './components/about-view.js';
 import { TeacherGuideView } from './components/teacher-guide-view.js';
 import { LessonPlanView }   from './components/lesson-plan-view.js';
 import { NotFoundView } from './components/not-found-view.js';
+import { escapeAttr as _escape } from './utils/html-safety.js';
+
+/**
+ * Parse the current hash into a structured route object.
+ *
+ * Função pura, exportada separadamente do Router para ser testável
+ * diretamente (ver tests/audio-tests.js) sem duplicar esta lógica e sem
+ * exigir um DOM (document) para ser importada.
+ *
+ * @param {string} hash  e.g. "#/lesson/a1/m01/l01"
+ * @returns {{ route: string, params: string[] }}
+ */
+export function parseHash(hash) {
+  /* Strip leading "#/" and split on "/" */
+  const parts  = hash.replace(/^#\/?/, '').split('/').filter(Boolean);
+  const route  = parts[0] || '';
+  const params = parts.slice(1);
+  return { route, params };
+}
 
 export const Router = (() => {
   /**
@@ -51,25 +70,16 @@ export const Router = (() => {
     'plano':  LessonPlanView.render,
   };
 
-  /** @type {HTMLElement} */
-  const appRoot = document.getElementById('app-root');
-
-  /** @type {HTMLElement} */
-  const breadcrumbEl = document.getElementById('breadcrumb');
-
   /**
-   * Parse the current hash into a structured route object.
-   *
-   * @param {string} hash  e.g. "#/lesson/a1/m01/l01"
-   * @returns {{ route: string, params: string[] }}
+   * Resolvidos sob demanda (não no momento da avaliação do módulo) para
+   * que router.js possa ser importado em ambientes sem DOM — como
+   * tests/audio-tests.js, que importa apenas `parseHash` via Node puro.
+   * @returns {HTMLElement}
    */
-  function parseHash(hash) {
-    /* Strip leading "#/" and split on "/" */
-    const parts  = hash.replace(/^#\/?/, '').split('/').filter(Boolean);
-    const route  = parts[0] || '';
-    const params = parts.slice(1);
-    return { route, params };
-  }
+  function _appRoot() { return document.getElementById('app-root'); }
+
+  /** @returns {HTMLElement} */
+  function _breadcrumbEl() { return document.getElementById('breadcrumb'); }
 
   /**
    * Build and inject breadcrumb links based on the current route.
@@ -105,7 +115,7 @@ export const Router = (() => {
 
     /* Render only if there is more than just Home */
     if (items.length <= 1) {
-      breadcrumbEl.innerHTML = '';
+      _breadcrumbEl().innerHTML = '';
       return;
     }
 
@@ -120,7 +130,7 @@ export const Router = (() => {
         }).join('')}
       </div>`;
 
-    breadcrumbEl.innerHTML = html;
+    _breadcrumbEl().innerHTML = html;
   }
 
   /**
@@ -132,6 +142,7 @@ export const Router = (() => {
    */
   async function handleRoute(state, audio) {
     const { route, params } = parseHash(window.location.hash);
+    const appRoot = _appRoot();
 
     /* Show loading indicator while the view renders */
     appRoot.innerHTML = '<div class="loading-screen"><p>Carregando&hellip;</p></div>';
@@ -215,25 +226,13 @@ export const Router = (() => {
     if (route === '' || route === 'home') {
       HomeView.hydrate({ state, audio });
     }
+    if (route === 'guia') {
+      TeacherGuideView.hydrate();
+    }
     if (route === 'plano') {
       const { LessonPlanEngine } = await import('./modules/lesson-plan/lesson-plan-engine.js');
       LessonPlanEngine.hydrate();
     }
-  }
-
-  /**
-   * Escape HTML special characters to prevent XSS in breadcrumb labels.
-   *
-   * @param {string} str
-   * @returns {string}
-   */
-  function _escape(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
   }
 
   return {

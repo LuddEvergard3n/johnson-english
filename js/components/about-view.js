@@ -6,13 +6,9 @@
  * secção do ecossistema educacional.
  */
 
-export const AboutView = (() => {
+import { escapeAttr as _escape } from '../utils/html-safety.js';
 
-  function _escape(str) {
-    return String(str)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  }
+export const AboutView = (() => {
 
   const ECOSYSTEM = [
     { name: 'Johnson English', subject: 'Língua Inglesa',    url: 'https://luddevergard3n.github.io/johnson-english/', active: true },
@@ -62,10 +58,11 @@ export const AboutView = (() => {
 
         <h2 class="about-section-title">
           O Projeto em Números
+          <!-- Selo de versão: atualizar manualmente a cada release (ver CHANGELOG.md) -->
           <span style="font-family:var(--font-sans);font-size:0.72rem;font-weight:700;
                        background:var(--color-accent);color:#fff;padding:2px 8px;
                        border-radius:3px;vertical-align:middle;margin-left:0.5rem;
-                       letter-spacing:0.04em">v1.9</span>
+                       letter-spacing:0.04em">v2.0.1</span>
         </h2>
         <div class="about-metrics">
           <div class="metric-card"><span class="metric-value">209</span><span class="metric-label">Lições</span></div>

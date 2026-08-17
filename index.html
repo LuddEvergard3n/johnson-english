@@ -18,7 +18,6 @@
       script-src 'self';
       style-src 'self' 'unsafe-inline';
       media-src 'self' blob:;
-      connect-src 'self' https://seu-servidor-tts.com;
   -->
 
   <title>Johnson English — Laboratório de Língua</title>
@@ -73,7 +72,7 @@
     </div>
   </main>
 
-  <!-- Banner de status do áudio: aparece ao detectar o backend -->
+  <!-- Banner de status do áudio: aparece quando a Web Speech API não está disponível no navegador -->
   <div id="audio-banner" class="audio-banner hidden" aria-live="polite" role="status"></div>
 
   <footer id="site-footer" role="contentinfo">

@@ -159,14 +159,15 @@ js/
   lesson-engine.js / audio-engine.js / shadowing-engine.js
   components/
   modules/
-    grammar/ logic/ rhetoric/ pronunciation/
+    grammar/ logic/ rhetoric/ pronunciation/ lesson-plan/
+  utils/
+    html-safety.js
 data/
   levels.json       6 níveis (A1–C2)
   modules.json      55 módulos (m01–m55)
   lessons.json      209 lições
 tests/
   test-runner.js    105 testes (Node.js, zero dependências)
-server/
 docs/
   architecture.md / pedagogy.md / audio-system.md / development-guide.md
 ```

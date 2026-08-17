@@ -4,7 +4,12 @@
  *
  * Página com sidebar de navegação por âncoras e cartões de actividades práticas.
  * Layout: sidebar fixa (260px) + conteúdo longo.
- * Sem hidratação: conteúdo totalmente estático.
+ * Sem hidratação para o conteúdo — mas o índice lateral precisa de JS: os
+ * links usam fragmentos simples ("#trivium") que, se deixados para o
+ * comportamento padrão do navegador, disparam um evento hashchange e são
+ * interceptados pelo router como se fossem uma rota de aplicativo
+ * inexistente, levando à página "Não encontrada". hydrate() intercepta
+ * esses cliques e faz o scroll manualmente, sem tocar em location.hash.
  */
 
 export const TeacherGuideView = (() => {
@@ -334,5 +339,28 @@ export const TeacherGuideView = (() => {
     `;
   }
 
-  return { render };
+  /**
+   * Intercepta cliques nos links do índice lateral e faz scroll manual até
+   * a seção correspondente, em vez de deixar o navegador mudar
+   * location.hash (o que seria capturado pelo router como uma rota de
+   * app inexistente).
+   */
+  function hydrate() {
+    const sidebar = document.querySelector('.guide-sidebar');
+    if (!sidebar) return;
+
+    sidebar.addEventListener('click', (event) => {
+      const link = event.target.closest('.guide-nav-link');
+      if (!link) return;
+
+      const targetId = link.getAttribute('href').slice(1);
+      const target   = document.getElementById(targetId);
+      if (!target) return;
+
+      event.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  return { render, hydrate };
 })();

@@ -6,6 +6,221 @@ Versões mais recentes primeiro.
 
 ---
 
+## [2.0.1] — 2026-07-24 (3ª rodada — infraestrutura de testes)
+
+### Corrigido
+
+**`content-tests-a2.js` nunca rodava — 1109 asserções órfãs**
+- O arquivo existia desde a formação original do nível A2, mas usava um
+  formato próprio (`process.exit()` direto, sem exportar `run()`)
+  incompatível com `test-runner.js`, então nunca esteve na lista de
+  suítes executadas. Rodando standalone, **4 das suas asserções
+  falhavam de verdade**: esperava 7 módulos A2 / 26 lições (contagens de
+  quando o arquivo foi escrito), mas o currículo A2 já tinha crescido
+  para 11 módulos / 42 lições (adição dos módulos m44–m47) sem que
+  ninguém percebesse a regressão, porque o teste nunca rodava.
+  Reescrito para o formato `describe`/`it`/`assert` compartilhado, com
+  as contagens corrigidas para a estrutura atual, e conectado em
+  `test-runner.js`. Suíte total: 106 → **1215 testes**.
+
+**Duplicação de lógica entre testes e produção**
+- `tests/audio-tests.js` mantinha cópias manuais de `sanitiseText`
+  (audio-engine.js) e `parseHash` (router.js) em vez de importar as
+  funções reais — se a regex de sanitização ou o parsing de hash
+  mudasse em produção sem atualizar a cópia do teste, a suíte
+  continuaria verde validando uma implementação que já não existia.
+  `sanitiseText` e `parseHash` agora são exports nomeados de nível de
+  módulo (antes eram funções privadas dentro do IIFE de `AudioEngine`/
+  `Router`) — mesma lógica, mesmo comportamento, agora testável
+  diretamente. `audio-tests.js` importa as duas via `import()` dinâmico
+  (necessário porque `test-runner.js` é CommonJS e os módulos do
+  projeto são ES Modules).
+- Isso expôs um problema secundário: `router.js` resolvia
+  `document.getElementById('app-root'/'breadcrumb')` no momento da
+  avaliação do módulo (fora de qualquer função), então importar
+  `router.js` — mesmo só para pegar `parseHash` — quebrava em ambiente
+  sem DOM (Node puro do test-runner). Corrigido: resolução de
+  `appRoot`/`breadcrumbEl` passou a ser preguiçosa (só busca no DOM
+  quando uma função do Router é de fato chamada), sem nenhuma mudança
+  de comportamento em produção — confirmado com teste funcional via
+  jsdom simulando `Router.init()` e navegação real por hash.
+
+**Bug de ordenação na saída do próprio framework de testes**
+- `it()` era declarada `async function` incondicionalmente, então
+  mesmo testes 100% síncronos (todos os do projeto) tinham seu
+  `console.log` de resultado adiado para um microtask — os cabeçalhos
+  de `describe()` de suítes diferentes apareciam todos agrupados antes
+  dos `✓`/`✗` correspondentes, em vez de intercalados na ordem certa.
+  As contagens de passou/falhou sempre estiveram corretas; só a leitura
+  da saída ficava confusa para depuração. Corrigido: `it()` só recorre
+  a Promise quando o corpo do teste de fato retorna algo "thenable".
+
+### Estatísticas
+- Testes: **1215/1215** (106 + 1109 do A2 recém-conectado)
+
+---
+
+## [2.0.1] — 2026-07-24
+
+### Corrigido — Auditoria completa (2ª rodada)
+
+**Bancos de palavras de reorder desalinhados da resposta — 37 de 197 exercícios**
+- `data/lessons.json`: auditoria sistêmica (diff de multiset entre `words` e
+  os tokens de `answer`) encontrou 38 exercícios de reorder — todos na
+  posição `practice[4]` de suas lições — em que o banco de palavras não
+  contém exatamente os tokens necessários para montar a resposta correta:
+  tiles faltando, sobrando, duplicados, ou com a forma verbal errada
+  (ex.: "agrees" no banco quando a resposta pede "agree" após "does").
+  37 foram corrigidos ressincronizando o banco com a `answer` (que se
+  confirmou correta contra os próprios exemplos/explicações de cada
+  lição); 2 desses 37 também precisavam de correção na própria `answer`:
+  - **a2/m11/l02**: faltava a preposição "from" — "I'm working home" →
+    "I'm working **from** home" (confirmado pelo exemplo da lição:
+    "I usually work in an office, but today I'm working from home.")
+  - **c2/m38/l04**: o banco tinha palavras de um rascunho anterior da
+    frase ("decision"+"came"); resincronizado para a versão final e
+    correta já armazenada em `answer` ("decided"), que reflete
+    literalmente o exemplo AFTER da própria lição sobre concisão.
+  1 exercício (**c1/m53/l02**) ficou com a `answer` truncada — termina
+  em "— is" sem completar a frase (o exemplo da lição termina em
+  "...is causality."). Não foi corrigido: completar a frase exigiria
+  inventar conteúdo que não estava nos dados originais. Fica sinalizado
+  para revisão manual.
+
+**Multiple-choice e demais tipos de exercício — auditados, sem problemas**
+- Verificação sistêmica confirmou que todos os 392 exercícios
+  multiple-choice têm `answer` presente entre as `options`, sem
+  duplicatas. `production`, `listening`, `repetition` e `vocabulary`
+  também auditados; a ausência de tradução (`pt`/`translation`) em
+  C1/C2 é decisão de design (imersão total), não bug.
+
+**"undefined" visível em lições de pronúncia C1/C2**
+- `pronunciation-lesson-view.js`: `w.pt` era renderizado sem proteção
+  condicional, ao contrário do padrão usado em todo o resto do código.
+  Como C1/C2 não têm tradução por design, a palavra literal "undefined"
+  aparecia na tela ao lado de 48 itens em 4 lições
+  (c1/m34/l01, c1/m34/l02, c2/m41/l01, c2/m41/l02). Corrigido para
+  seguir o mesmo padrão condicional (`w.pt ? ... : ''`) já usado nos
+  demais campos opcionais do projeto.
+
+**Botão "Limpar" do Gerador de Plano de Aula não limpava tudo**
+- `lesson-plan-engine.js`: `limpar()` resetava os campos de texto e os
+  checkboxes de Objetivos/Atividades (via `onNivel()`), mas não os de
+  Recursos Didáticos e Avaliação — esses são fixos e independentes de
+  nível, então `onNivel()` nunca os alcançava. Um professor que
+  marcasse esses checkboxes e clicasse em Limpar via as marcações
+  permanecerem. Corrigido: `limpar()` agora re-renderiza os 4 painéis.
+
+**Documentação — resíduos remanescentes do servidor TTS removido**
+- `index.html`: comentário do banner de áudio ainda dizia "aparece ao
+  detectar o backend" (sistema pré-v1.9.0); corrigido para refletir o
+  gatilho real (ausência de suporte à Web Speech API no navegador).
+  CSP recomendada no `<head>` ainda sugeria liberar `connect-src` para
+  um servidor TTS inexistente; removido.
+
+### Estatísticas
+- Testes: 106/106
+- Exercícios de reorder auditados: 197/197 (37 corrigidos, 1 sinalizado)
+- Exercícios multiple-choice auditados: 392/392 (0 problemas)
+
+---
+
+## [2.0.1] — 2026-07-24 (1ª rodada)
+
+### Corrigido
+
+**Exercícios de reorganização (reorder) — bug crítico**
+- `lesson-view.js`: o gabarito (`data-answer`) era montado a partir de `ex.words.join(' ')`
+  — a ordem já embaralhada armazenada no JSON — em vez do campo `ex.answer`, que contém
+  a frase correta de fato. Afetava os 197 exercícios de reorder de todo o currículo
+  (A1–C2): não havia forma pedagogicamente correta de acertá-los.
+- `lesson-view.js`: embaralhamento do banco de palavras trocado de
+  `array.sort(() => Math.random() - 0.5)` (enviesado) para Fisher-Yates uniforme.
+
+**Conclusão prematura da etapa Prática**
+- `logic-engine.js`: `_checkAllComplete` verificava apenas os exercícios do mesmo
+  tipo recém-respondido (`multiple-choice`, `fill-blank` ou `reorder`
+  isoladamente). Como toda lição com prática mistura os três tipos no mesmo
+  array, a etapa era marcada como concluída assim que só um tipo fosse
+  finalizado, ignorando os demais. Corrigido para exigir todos os exercícios
+  da etapa, independentemente do tipo.
+
+**Shadowing — barra de progresso**
+- `shadowing-engine.js`: a percentagem usava o índice 0-based da frase atual
+  e nunca chegava a 100%, mesmo na última frase. Corrigido para refletir a
+  frase em andamento (1-based).
+
+**Navegação do Guia do Professor — bug crítico**
+- `teacher-guide-view.js`: os 11 links do índice lateral usavam fragmentos
+  simples (`#trivium`, `#estrutura`...) sem o prefixo `#/` das rotas do
+  app. Como o router trata qualquer mudança de hash como navegação,
+  clicar em qualquer um desses links levava à página "Não encontrada",
+  substituindo o guia inteiro. Corrigido interceptando os cliques e
+  fazendo scroll manual, sem tocar em `location.hash` — nova função
+  `TeacherGuideView.hydrate()`, registrada em `router.js`.
+
+**Fill-blank com múltiplas lacunas no mesmo prompt**
+- `logic-engine.js`: exercícios com dois `[BLANK]` no mesmo prompt (5 no
+  currículo) validavam apenas o primeiro campo (`querySelector` em vez de
+  `querySelectorAll`) — a segunda lacuna podia ficar vazia ou errada e o
+  exercício ainda marcava "Correto!". Corrigido para validar todos os
+  campos.
+- `data/lessons.json`: 3 desses 5 exercícios exigem palavras diferentes em
+  cada lacuna (ex.: "can" / "can't"), mas o modelo de dados só suportava
+  um `answer` compartilhado. Adicionado campo opcional `answers` (array,
+  uma resposta por lacuna); os outros 391 fill-blank do currículo
+  continuam usando `answer` (string única) sem alteração. Respostas
+  corrigidas com base nos próprios exemplos e explicações de cada lição:
+  - "I `[can]` swim, but I `[can't]` drive." (m04/l03)
+  - "I usually `[drink]` coffee, but today I `[am drinking]` tea." (m11/l02)
+  - "She `[lives]` in Brasília, but she `[is staying]` in São Paulo this
+    week." (m11/l02)
+- `lesson-view.js`: `_renderFillBlank` agora emite `data-answers` (JSON)
+  quando `ex.answers` está presente.
+- `tests/content-tests.js`: novo teste garante que todo fill-blank com
+  2+ `[BLANK]` e `answers` definido tem exatamente um item por lacuna.
+
+**Produção — campos travados antes da hora**
+- `rhetoric-engine.js`: campos já preenchidos eram desabilitados mesmo
+  quando a submissão inteira era rejeitada por outro campo vazio,
+  impedindo revisão antes de completar o resto. Corrigido: só desabilita
+  depois que todos os campos passam na validação.
+
+**Áudio "fantasma"**
+- `audio-engine.js`: clicar num botão de áudio enquanto outro já tocava
+  nunca resetava a UI do botão anterior — ficava preso mostrando
+  "Reproduzindo…" indefinidamente, porque o `onerror` de interrupção do
+  Speech Synthesis retorna cedo sem notificar o chamador. Corrigido
+  rastreando o botão ativo e resetando-o proativamente ao trocar.
+
+**Selo de versão desatualizado**
+- `about-view.js`: "Sobre" mostrava `v1.9` fixo no HTML; corrigido para
+  `v2.0.1`, com comentário lembrando de atualizar a cada release.
+
+### Alterado — Remoção de redundâncias
+
+- Nova fonte única `js/utils/html-safety.js` (`escapeHtml` / `escapeAttr`),
+  substituindo 9 implementações independentes e ligeiramente divergentes da
+  mesma função de escape de HTML (`_escape`, `_escapeAttr`, `_esc`), antes
+  duplicadas em: `router.js`, `shadowing-engine.js`, `lesson-view.js`,
+  `pronunciation-lesson-view.js`, `levels-view.js`, `module-view.js`,
+  `about-view.js`, `feedback-engine.js` e `lesson-plan-engine.js`.
+- `rhetoric-engine.js` e `shadowing-engine.js`: mensagens de feedback
+  construídas manualmente via `innerHTML` substituídas por chamadas ao
+  `FeedbackEngine` já existente, eliminando markup duplicado.
+- `server/` (integração Coqui TTS, já dada como removida no changelog da
+  v1.9.0 mas ainda presente no repositório como código órfão) removido
+  definitivamente do repositório.
+- `docs/architecture.md`, `README.md`, `docs/development-guide.md`:
+  referências obsoletas ao servidor Flask, rate limiting server-side e
+  `_escape()` corrigidas para refletir o estado real do código
+  (Web Speech API pura, sem servidor; escape centralizado em `js/utils/`).
+
+### Estatísticas
+- Testes: 106/106
+
+---
+
 ## [2.0.0] — 2026-03-11
 
 ### Adicionado — Três novas seções e ecossistema completo

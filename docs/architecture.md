@@ -27,7 +27,7 @@ johnson-english/
 │   ├── router.js               Roteador SPA baseado em hash
 │   ├── state.js                Carregamento de dados, rastreamento de progresso
 │   ├── lesson-engine.js        Hidratação pós-renderização das lições normais
-│   ├── audio-engine.js         TTS, Web Speech API, cache, throttle
+│   ├── audio-engine.js         TTS via Web Speech API
 │   ├── shadowing-engine.js     Controlador do modo shadowing
 │   │
 │   ├── components/
@@ -42,17 +42,20 @@ johnson-english/
 │   │   ├── not-found-view.js
 │   │   └── feedback-engine.js         Helper de UI para feedback de exercícios
 │   │
-│   └── modules/
-│       ├── grammar/
-│       │   └── grammar-engine.js      Etapa de Gramática (Escuta + Repetição)
-│       ├── logic/
-│       │   └── logic-engine.js        Etapa de Lógica (Prática)
-│       ├── rhetoric/
-│       │   └── rhetoric-engine.js     Etapa de Retórica (Produção)
-│       ├── pronunciation/
-│       │   └── pronunciation-engine.js  Lições de pronúncia (type: "pronunciation")
-│       └── lesson-plan/
-│           └── lesson-plan-engine.js  Interactividade do Gerador de Plano de Aula
+│   ├── modules/
+│   │   ├── grammar/
+│   │   │   └── grammar-engine.js      Etapa de Gramática (Escuta + Repetição)
+│   │   ├── logic/
+│   │   │   └── logic-engine.js        Etapa de Lógica (Prática)
+│   │   ├── rhetoric/
+│   │   │   └── rhetoric-engine.js     Etapa de Retórica (Produção)
+│   │   ├── pronunciation/
+│   │   │   └── pronunciation-engine.js  Lições de pronúncia (type: "pronunciation")
+│   │   └── lesson-plan/
+│   │       └── lesson-plan-engine.js  Interactividade do Gerador de Plano de Aula
+│   │
+│   └── utils/
+│       └── html-safety.js     escapeHtml / escapeAttr — fonte única de escape HTML
 │
 ├── data/
 │   ├── levels.json             Definições de nível CEFR (A1–C2)
@@ -64,9 +67,6 @@ johnson-english/
 │   ├── content-tests.js        Integridade do currículo A1
 │   ├── content-tests-a2.js     Integridade do currículo A2 (689 asserções)
 │   └── audio-tests.js          Testes do motor de áudio
-│
-├── server/
-│       ├── README.md
 │
 └── docs/
     ├── architecture.md         Este arquivo
@@ -248,13 +248,14 @@ não suporta redirecionamento server-side sem configuração adicional.
 
 ## Segurança
 
-- **XSS**: todo texto proveniente de JSON é escapado via `_escape()` antes de
-  inserção como `innerHTML`. Sem uso de `textContent` puro apenas onde formatação é necessária.
+- **XSS**: todo texto proveniente de JSON é escapado via `escapeHtml()` /
+  `escapeAttr()` (`js/utils/html-safety.js`) antes de inserção como `innerHTML`.
+  Sem uso de `textContent` puro apenas onde formatação é necessária.
 - **TTS**: texto sanitizado via regex `[^\w\s.,!?'"();:\-]` + limite de 500 chars
-  antes de enviar ao servidor ou à Web Speech API.
+  antes de enviar à Web Speech API. Não há servidor — toda síntese de voz é
+  local ao navegador.
 - **CSP**: definida via `<meta>` em `index.html`. Scripts restritos a `'self'`.
   `'unsafe-inline'` permitido apenas para estilos (necessário para atributos `style` gerados).
-- **Rate limiting**: throttle de 500ms no cliente + 30 req/60s no servidor Flask.
 
 ---
 

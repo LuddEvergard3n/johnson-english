@@ -1,10 +1,21 @@
 /**
- * audio-tests.js — Audio system unit tests
+ * audio-tests.js — Audio system & router unit tests
  * Johnson English Language Laboratory
  *
- * Tests the AudioEngine logic that can be verified without a browser:
- *   - Text sanitisation rules
- *   - Cache key consistency
+ * Tests the pure logic that can be verified without a browser:
+ *   - AudioEngine.sanitiseText (text sanitisation rules, cache key consistency)
+ *   - Router.parseHash (hash-route parsing)
+ *
+ * Estes testes importam as funções reais de js/audio-engine.js e
+ * js/router.js via import() dinâmico, em vez de reimplementar a lógica
+ * localmente. Antes desta reescrita, este arquivo mantinha cópias
+ * manuais de sanitiseText/parseHash — se a regex de sanitização ou o
+ * parsing de hash mudasse em produção sem que alguém lembrasse de
+ * atualizar a cópia aqui, os testes continuariam verdes validando uma
+ * implementação que já não existia mais. `test-runner.js` é CommonJS e
+ * os módulos do projeto são ES Modules; import() dinâmico funciona a
+ * partir de um contexto CommonJS e resolve essa interoperabilidade sem
+ * precisar reescrever o runner.
  *
  * Note: Actual Web Speech API playback requires a browser environment.
  * Those are integration tests outside scope.
@@ -12,17 +23,17 @@
 
 'use strict';
 
+const path = require('path');
+
 async function run({ describe, it, assert }) {
+  const { sanitiseText } = await import(
+    'file://' + path.join(__dirname, '..', 'js', 'audio-engine.js')
+  );
+  const { parseHash } = await import(
+    'file://' + path.join(__dirname, '..', 'js', 'router.js')
+  );
 
-  describe('AudioEngine — text sanitisation', () => {
-    function sanitiseText(text) {
-      return String(text)
-        .replace(/[^\w\s.,!?'"();:\-]/gi, ' ')
-        .replace(/\s{2,}/g, ' ')
-        .trim()
-        .slice(0, 500);
-    }
-
+  describe('AudioEngine.sanitiseText', () => {
     it('passes clean English text through unchanged', () => {
       const input  = 'Hello, how are you?';
       const result = sanitiseText(input);
@@ -63,36 +74,21 @@ async function run({ describe, it, assert }) {
     });
   });
 
-  describe('AudioEngine — cache key consistency', () => {
-    function sanitise(text) {
-      return String(text)
-        .replace(/[^\w\s.,!?'"();:\-]/gi, ' ')
-        .replace(/\s{2,}/g, ' ')
-        .trim()
-        .slice(0, 500);
-    }
-
+  describe('AudioEngine.sanitiseText — cache key consistency', () => {
     it('same text produces the same sanitised cache key', () => {
       const text = 'Good morning!';
-      assert.equal(sanitise(text), sanitise(text), 'Cache key must be deterministic');
+      assert.equal(sanitiseText(text), sanitiseText(text), 'Cache key must be deterministic');
     });
 
     it('different text produces different cache keys', () => {
       assert(
-        sanitise('Hello') !== sanitise('Goodbye'),
+        sanitiseText('Hello') !== sanitiseText('Goodbye'),
         'Different texts must produce different keys'
       );
     });
   });
 
-  describe('Route format validation', () => {
-    function parseHash(hash) {
-      const parts  = hash.replace(/^#\/?/, '').split('/').filter(Boolean);
-      const route  = parts[0] || '';
-      const params = parts.slice(1);
-      return { route, params };
-    }
-
+  describe('Router.parseHash', () => {
     it('parses home route "#/"', () => {
       const { route, params } = parseHash('#/');
       assert.equal(route, '');

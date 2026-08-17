@@ -9,8 +9,10 @@
  *   - Gerar o documento HTML na preview
  *   - Calcular carga horária automaticamente
  *
- * Dependências: nenhuma (vanilla JS, sem imports externos)
+ * Dependências: apenas o utilitário compartilhado de escape HTML.
  */
+
+import { escapeAttr as _esc } from '../../utils/html-safety.js';
 
 export const LessonPlanEngine = (() => {
 
@@ -143,13 +145,6 @@ export const LessonPlanEngine = (() => {
     'Portfólio de produções da unidade',
   ];
 
-  /* ── Utilitário: escape HTML ─────────────────────────────────────── */
-  function _esc(str) {
-    return String(str)
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-  }
-
   /* ── Renderiza lista de checkboxes num painel ────────────────────── */
   function _renderChecks(boxId, items, prefix) {
     const box = document.getElementById(boxId);
@@ -281,7 +276,9 @@ export const LessonPlanEngine = (() => {
     const nivel = document.getElementById('pf-nivel');
     if (nivel) nivel.value = '';
 
-    onNivel(); // repõe placeholders
+    onNivel(); // repõe placeholders de objetivos/atividades (dependem do nível)
+    _renderChecks('box-rec', RECURSOS,   'rec'); // recursos e avaliação são fixos —
+    _renderChecks('box-ava', AVALIACOES, 'ava'); // onNivel() não os alcança, precisam de reset próprio
     calcCarga();
   }
 

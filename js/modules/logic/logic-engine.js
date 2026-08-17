@@ -51,7 +51,7 @@ export const LogicEngine = (() => {
         FeedbackEngine.showIncorrect(feedback, `A resposta correta é: "${answer}"`);
       }
 
-      _checkAllComplete('multiple-choice', practiceBody, levelId, moduleId, lessonId, state);
+      _checkAllComplete(practiceBody, levelId, moduleId, lessonId, state);
     });
   }
 
@@ -72,31 +72,50 @@ export const LogicEngine = (() => {
       if (!exercise || exercise.getAttribute('data-type') !== 'fill-blank') return;
       if (exercise.classList.contains('answered')) return;
 
-      const input    = exercise.querySelector('.blank-input');
-      const expected = exercise.getAttribute('data-answer');
-      const feedback = exercise.querySelector('.exercise-feedback');
+      const inputs      = exercise.querySelectorAll('.blank-input');
+      const singleAnswer = exercise.getAttribute('data-answer');
+      const answersAttr  = exercise.getAttribute('data-answers');
+      const feedback     = exercise.querySelector('.exercise-feedback');
 
-      if (!input || !expected) return;
+      if (!inputs.length || (!singleAnswer && !answersAttr)) return;
 
-      const userAnswer = input.value.trim().toLowerCase();
-      const correct    = expected.trim().toLowerCase();
+      /*
+       * `data-answers` (JSON array) tem uma resposta por lacuna, para os
+       * casos em que cada [BLANK] exige uma palavra diferente. Na
+       * ausência dele, usa `data-answer` (string única) repetido para
+       * todas as lacunas — correto quando a resposta é literalmente a
+       * mesma em cada uma.
+       */
+      let expectedList;
+      try {
+        expectedList = answersAttr
+          ? JSON.parse(answersAttr)
+          : Array.from(inputs, () => singleAnswer);
+      } catch (_) {
+        return;
+      }
 
-      if (userAnswer === correct) {
-        input.classList.add('correct');
+      const allCorrect = Array.from(inputs).every((input, i) =>
+        input.value.trim().toLowerCase() === (expectedList[i] || '').trim().toLowerCase()
+      );
+      const expectedDisplay = expectedList.join(' / ');
+
+      if (allCorrect) {
+        inputs.forEach((input) => input.classList.add('correct'));
         FeedbackEngine.showCorrect(feedback, 'Correto!');
         exercise.classList.add('answered');
-        input.disabled    = true;
+        inputs.forEach((input) => { input.disabled = true; });
         checkBtn.disabled = true;
       } else {
-        input.classList.add('incorrect');
-        FeedbackEngine.showIncorrect(feedback, `Resposta esperada: "${expected}"`);
+        inputs.forEach((input) => input.classList.add('incorrect'));
+        FeedbackEngine.showIncorrect(feedback, `Resposta esperada: "${expectedDisplay}"`);
         setTimeout(() => {
-          input.classList.remove('incorrect');
+          inputs.forEach((input) => input.classList.remove('incorrect'));
           feedback.innerHTML = '';
         }, 2000);
       }
 
-      _checkAllComplete('fill-blank', practiceBody, levelId, moduleId, lessonId, state);
+      _checkAllComplete(practiceBody, levelId, moduleId, lessonId, state);
     });
   }
 
@@ -155,7 +174,7 @@ export const LogicEngine = (() => {
         setTimeout(() => { feedback.innerHTML = ''; }, 2500);
       }
 
-      _checkAllComplete('reorder', practiceBody, levelId, moduleId, lessonId, state);
+      _checkAllComplete(practiceBody, levelId, moduleId, lessonId, state);
     });
 
     /* Recomeçar */
@@ -176,9 +195,14 @@ export const LogicEngine = (() => {
     });
   }
 
-  function _checkAllComplete(type, container, levelId, moduleId, lessonId, state) {
-    const all       = container.querySelectorAll(`.exercise[data-type="${type}"]`);
-    const allDone   = Array.from(all).every((ex) => ex.classList.contains('answered'));
+  function _checkAllComplete(container, levelId, moduleId, lessonId, state) {
+    /*
+     * Verifica TODOS os exercícios da etapa Prática, não apenas os do tipo
+     * que acabou de ser respondido — uma lição normalmente mistura
+     * multiple-choice, fill-blank e reorder no mesmo array `practice`.
+     */
+    const all     = container.querySelectorAll('.exercise[data-type]');
+    const allDone = Array.from(all).every((ex) => ex.classList.contains('answered'));
     if (allDone && all.length > 0) {
       state.markActivityComplete(levelId, moduleId, lessonId, 'practice');
     }

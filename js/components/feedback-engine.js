@@ -3,13 +3,9 @@
  * Johnson English — Laboratório de Língua
  */
 
-export const FeedbackEngine = (() => {
-  function _escape(str) {
-    return String(str)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
+import { escapeHtml as _escape } from '../utils/html-safety.js';
 
+export const FeedbackEngine = (() => {
   return {
     showCorrect(container, message) {
       if (!container) return;

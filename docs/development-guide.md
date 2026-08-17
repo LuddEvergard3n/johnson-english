@@ -240,7 +240,7 @@ case 'seu-novo-tipo':
 - Todas as funções públicas são documentadas com JSDoc.
 - Prefixo `_underscore` = privado, uso interno apenas.
 - Sem `console.log` em código de produção (apenas `console.info` e `console.warn` onde justificado).
-- Toda inserção de HTML usa `_escape()` para prevenir XSS.
+- Toda inserção de HTML usa `escapeHtml()` / `escapeAttr()` de `js/utils/html-safety.js` para prevenir XSS.
 - Sem dependências externas — zero `npm install`.
 
 ---
@@ -258,8 +258,6 @@ Se um arquivo se aproximar desse limite, divida por responsabilidade.
 2. Configurações do repositório → Pages → Source: branch `main`, raiz `/`.
 3. O GitHub Pages servirá `index.html` da raiz do repositório.
 4. Áudio funciona nativamente via Web Speech API do browser — nenhuma configuração adicional necessária.
-
-Ver `docs/audio-system.md` para detalhes de deploy do servidor TTS.
 
 ---
 

@@ -3,6 +3,8 @@
  * Johnson English — Laboratório de Língua
  */
 
+import { FeedbackEngine } from '../../components/feedback-engine.js';
+
 export const RhetoricEngine = (() => {
   function hydrate({ levelId, moduleId, lessonId, state }) {
     _hydrateProduction(levelId, moduleId, lessonId, state);
@@ -30,36 +32,26 @@ export const RhetoricEngine = (() => {
           input.style.borderColor = 'var(--color-error)';
         } else {
           input.style.borderColor = 'var(--color-success)';
-          input.disabled = true;
         }
       });
 
       const feedbackEl = document.getElementById('production-feedback');
 
       if (!allFilled) {
-        if (feedbackEl) {
-          feedbackEl.innerHTML = `
-            <div class="feedback-message feedback-message--incorrect">
-              <span class="feedback-icon">!</span>
-              <span>Responda a todos os itens antes de enviar.</span>
-            </div>`;
-        }
+        FeedbackEngine.showIncorrect(feedbackEl, 'Responda a todos os itens antes de enviar.');
         return;
       }
+
+      inputs.forEach((input) => { input.disabled = true; });
 
       submitBtn.disabled = true;
       state.markActivityComplete(levelId, moduleId, lessonId, 'production');
 
-      if (feedbackEl) {
-        feedbackEl.innerHTML = `
-          <div class="feedback-message feedback-message--correct">
-            <span class="feedback-icon">&#10003;</span>
-            <span>
-              Respostas registradas. Releia-as em voz alta — cada frase soa natural?
-              Compare com os exemplos na seção de Escuta.
-            </span>
-          </div>`;
-      }
+      FeedbackEngine.showCorrect(
+        feedbackEl,
+        'Respostas registradas. Releia-as em voz alta — cada frase soa natural? ' +
+        'Compare com os exemplos na seção de Escuta.'
+      );
     });
   }
 

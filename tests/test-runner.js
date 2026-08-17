@@ -41,19 +41,35 @@ function describe(label, fn) {
 /**
  * Define a single test case.
  *
+ * Não é declarada `async` incondicionalmente: se `fn` for síncrona (caso
+ * de praticamente todos os testes do projeto), o resultado é registrado
+ * e impresso na hora, preservando a ordem de saída relativa aos
+ * describe() ao redor. Só recorre a Promise quando `fn()` de fato
+ * retorna algo "thenable" (teste genuinamente assíncrono).
+ *
  * @param {string}   label
  * @param {Function} fn    Test body. May be async.
  */
-async function it(label, fn) {
-  try {
-    await fn();
+function it(label, fn) {
+  function onSuccess() {
     _totalPassed++;
     console.log(`    ✓ ${label}`);
-  } catch (err) {
+  }
+  function onFailure(err) {
     _totalFailed++;
     _failures.push({ label, error: err });
     console.log(`    ✗ ${label}`);
     console.log(`      ${err.message}`);
+  }
+
+  try {
+    const result = fn();
+    if (result && typeof result.then === 'function') {
+      return result.then(onSuccess, onFailure);
+    }
+    onSuccess();
+  } catch (err) {
+    onFailure(err);
   }
 }
 
@@ -102,6 +118,7 @@ async function runAll() {
   /* Load test suites */
   const suitePaths = [
     path.join(__dirname, 'content-tests.js'),
+    path.join(__dirname, 'content-tests-a2.js'),
     path.join(__dirname, 'audio-tests.js'),
   ];
 

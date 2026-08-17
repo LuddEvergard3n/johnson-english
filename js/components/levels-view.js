@@ -3,6 +3,8 @@
  * Johnson English — Laboratório de Língua
  */
 
+import { escapeHtml as _escape } from '../utils/html-safety.js';
+
 export const LevelsView = (() => {
   async function render({ state }) {
     let levels = [];
@@ -36,12 +38,6 @@ export const LevelsView = (() => {
           ${cardsHtml}
         </div>
       </div>`;
-  }
-
-  function _escape(str) {
-    return String(str)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
   return { render };

@@ -7,13 +7,9 @@
  *   #/module/{levelId}/{moduleId}  → lista todas as lições do módulo
  */
 
-export const ModuleView = (() => {
-  function _escape(str) {
-    return String(str)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
+import { escapeHtml as _escape } from '../utils/html-safety.js';
 
+export const ModuleView = (() => {
   async function render({ route, params, state }) {
     if (route === 'level') {
       return _renderModuleList(params[0], state);

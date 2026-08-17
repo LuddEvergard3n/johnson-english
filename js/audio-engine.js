@@ -10,6 +10,24 @@
  * onError é chamado e a UI exibe "Áudio indisponível" — sem excepções.
  */
 
+/**
+ * Sanitiza o texto antes de enviar à Web Speech API.
+ * Permite apenas caracteres seguros para síntese de voz.
+ *
+ * Função pura, exportada separadamente do AudioEngine para ser testável
+ * diretamente (ver tests/audio-tests.js) sem duplicar esta lógica.
+ *
+ * @param {string} text
+ * @returns {string}
+ */
+export function sanitiseText(text) {
+  return String(text)
+    .replace(/[^\w\s.,!?'"();:\-]/gi, ' ')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+    .slice(0, 500);
+}
+
 export const AudioEngine = (() => {
   /* -------------------------------------------------------------------------
      Estado privado
@@ -21,21 +39,6 @@ export const AudioEngine = (() => {
   /* -------------------------------------------------------------------------
      HELPERS PRIVADOS
      ------------------------------------------------------------------------- */
-
-  /**
-   * Sanitiza o texto antes de enviar à Web Speech API.
-   * Permite apenas caracteres seguros para síntese de voz.
-   *
-   * @param {string} text
-   * @returns {string}
-   */
-  function _sanitise(text) {
-    return String(text)
-      .replace(/[^\w\s.,!?'"();:\-]/gi, ' ')
-      .replace(/\s{2,}/g, ' ')
-      .trim()
-      .slice(0, 500);
-  }
 
   /** Para qualquer reprodução em andamento. */
   function _stopAll() {
@@ -138,7 +141,7 @@ export const AudioEngine = (() => {
      * @param {Function} [callbacks.onError]
      */
     speak(text, { onStart, onEnd, onError } = {}) {
-      const sanitised = _sanitise(text);
+      const sanitised = sanitiseText(text);
       if (!sanitised) return;
       _stopAll();
       _speak(sanitised, onStart, onEnd, onError);
@@ -182,36 +185,57 @@ export const AudioEngine = (() => {
         statusEl.className   = modifier ? `audio-status ${modifier}` : 'audio-status';
       }
 
+      /*
+       * Rastreia o botão atualmente tocando. Necessário porque, ao
+       * interromper uma fala em andamento para iniciar outra, o
+       * `onerror` do SpeechSynthesisUtterance dispara com
+       * error === 'interrupted' — e o AudioEngine.speak() ignora esse
+       * caso silenciosamente (ver comentário em _speak), sem notificar
+       * o chamador. Sem este rastreamento, o botão anterior ficava com
+       * a classe "playing" presa indefinidamente.
+       */
+      let activeBtn = null;
+
+      function _resetButton(btn) {
+        btn.classList.remove('playing');
+        btn.setAttribute('aria-pressed', 'false');
+        _setStatus(btn, '');
+      }
+
       const handler = (event) => {
         const btn = event.target.closest('.btn--audio[data-text]');
         if (!btn) return;
 
         if (btn.classList.contains('playing')) {
           AudioEngine.stop();
-          btn.classList.remove('playing');
-          btn.setAttribute('aria-pressed', 'false');
-          _setStatus(btn, '');
+          _resetButton(btn);
+          activeBtn = null;
           return;
+        }
+
+        /* Outro botão estava tocando: restaura sua UI antes de trocar. */
+        if (activeBtn && activeBtn !== btn) {
+          _resetButton(activeBtn);
         }
 
         const text = btn.getAttribute('data-text');
         btn.classList.add('playing');
         btn.setAttribute('aria-pressed', 'true');
         _setStatus(btn, 'Reproduzindo…', 'audio-status--playing');
+        activeBtn = btn;
 
         AudioEngine.speak(text, {
           onEnd: () => {
-            btn.classList.remove('playing');
-            btn.setAttribute('aria-pressed', 'false');
-            _setStatus(btn, '');
+            _resetButton(btn);
+            if (activeBtn === btn) activeBtn = null;
             if (state && levelId && moduleId && lessonId) {
               state.markActivityComplete(levelId, moduleId, lessonId, 'listening');
             }
             onPlayed && onPlayed(text);
           },
           onError: () => {
-            btn.classList.remove('playing');
-            btn.setAttribute('aria-pressed', 'false');
+            _resetButton(btn);
+            if (activeBtn === btn) activeBtn = null;
             _setStatus(btn, 'Áudio indisponível', 'audio-status--error');
           },
         });
