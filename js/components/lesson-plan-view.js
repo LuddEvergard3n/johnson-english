@@ -3,7 +3,7 @@
  * Johnson English — Laboratório de Língua
  *
  * Retorna o HTML do layout de dois painéis (formulário + preview).
- * Toda a interactividade é gerida por lesson-plan-engine.js após hydrate().
+ * Toda a interatividade é gerida por lesson-plan-engine.js após hydrate().
  */
 
 export const LessonPlanView = (() => {

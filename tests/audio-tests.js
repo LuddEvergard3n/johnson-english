@@ -26,7 +26,7 @@
 const path = require('path');
 
 async function run({ describe, it, assert }) {
-  const { sanitiseText } = await import(
+  const { AudioEngine, sanitiseText, resolveRecordedAudio } = await import(
     'file://' + path.join(__dirname, '..', 'js', 'audio-engine.js')
   );
   const { parseHash } = await import(
@@ -85,6 +85,27 @@ async function run({ describe, it, assert }) {
         sanitiseText('Hello') !== sanitiseText('Goodbye'),
         'Different texts must produce different keys'
       );
+    });
+  });
+
+  describe('AudioEngine — recorded audio fallback', () => {
+    it('resolves a recorded phrase from the static map', () => {
+      const map = { 'Hello world!': './assets/audio/hello.wav' };
+      assert.equal(resolveRecordedAudio(map, 'Hello world!'), './assets/audio/hello.wav');
+    });
+
+    it('returns null when no recorded phrase exists', () => {
+      assert.equal(resolveRecordedAudio({}, 'Use the browser voice.'), null);
+    });
+
+    it('preserves punctuation when resolving the generated audio map', () => {
+      const map = { 'I’d love to!': './assets/audio/kokoro/phrase.mp3' };
+      assert.equal(resolveRecordedAudio(map, 'I’d love to!'), map['I’d love to!']);
+    });
+
+    it('accepts only supported accent preferences', () => {
+      assert.equal(AudioEngine.setAccent('gb'), 'gb');
+      assert.equal(AudioEngine.setAccent('invalid'), 'us');
     });
   });
 

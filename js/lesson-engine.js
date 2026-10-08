@@ -26,13 +26,16 @@ export const LessonEngine = (() => {
     GrammarEngine.hydrate({ levelId, moduleId, lessonId, state });
     LogicEngine.hydrate({ levelId, moduleId, lessonId, state });
     RhetoricEngine.hydrate({ levelId, moduleId, lessonId, state });
-    _hydrateSectionNav();
+    _hydrateSectionNav(params[3]);
+    import('./study-tools.js')
+      .then(({ StudyTools }) => StudyTools.hydrate({ levelId, moduleId, lessonId, state }))
+      .catch(() => {});
   }
 
   /**
    * Navegação entre seções da lição via abas (sidebar).
    */
-  function _hydrateSectionNav() {
+  function _hydrateSectionNav(requestedSection) {
     const navItems = document.querySelectorAll('.lesson-nav-item');
     const sections = document.querySelectorAll('.lesson-section');
     if (!navItems.length || !sections.length) return;
@@ -62,8 +65,19 @@ export const LessonEngine = (() => {
       });
     });
 
+    document.querySelector('.lesson-nav')?.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      const current = [...navItems].findIndex((item) => item.classList.contains('active'));
+      const offset = event.key === 'ArrowRight' ? 1 : -1;
+      const target = navItems[(current + offset + navItems.length) % navItems.length];
+      target.click();
+      target.focus();
+    });
+
     /* Ativa a primeira seção por padrão */
-    const first = sections[0];
+    const requested = requestedSection && [...sections].find((section) =>
+      section.id === requestedSection || section.id === `section-${requestedSection}`);
+    const first = requested || sections[0];
     if (first) showSection(first.id);
   }
 

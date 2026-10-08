@@ -2,9 +2,8 @@
  * audio-engine.js — Controlador de síntese de voz
  * Johnson English — Laboratório de Língua
  *
- * Utiliza exclusivamente a Web Speech API nativa do navegador.
- * Zero dependências externas. Compatível com GitHub Pages e qualquer
- * ambiente de hospedagem estática.
+ * Prefere gravações Kokoro pré-geradas e usa a Web Speech API como fallback.
+ * O site continua estático e compatível com GitHub Pages.
  *
  * Se a Web Speech API não estiver disponível (browser sem suporte),
  * onError é chamado e a UI exibe "Áudio indisponível" — sem excepções.
@@ -28,6 +27,11 @@ export function sanitiseText(text) {
     .slice(0, 500);
 }
 
+/** Resolve um texto para seu áudio estático, quando disponível. */
+export function resolveRecordedAudio(audioMap, text) {
+  return audioMap?.[text] || audioMap?.[sanitiseText(text)] || null;
+}
+
 export const AudioEngine = (() => {
   /* -------------------------------------------------------------------------
      Estado privado
@@ -35,6 +39,10 @@ export const AudioEngine = (() => {
 
   /** SpeechSynthesisUtterance em reprodução, se houver. */
   let _currentUtterance = null;
+  let _currentAudio = null;
+  let _audioMaps = { us: {}, gb: {} };
+  let _accent = 'us';
+  let _rate = 0.9;
 
   /* -------------------------------------------------------------------------
      HELPERS PRIVADOS
@@ -42,10 +50,40 @@ export const AudioEngine = (() => {
 
   /** Para qualquer reprodução em andamento. */
   function _stopAll() {
+    if (_currentAudio) {
+      _currentAudio.pause();
+      _currentAudio.removeAttribute('src');
+      _currentAudio = null;
+    }
     if (_currentUtterance && window.speechSynthesis) {
       window.speechSynthesis.cancel();
       _currentUtterance = null;
     }
+  }
+
+  /** Reproduz um arquivo Kokoro e retorna false quando não há gravação. */
+  function _speakRecorded(text, onStart, onEnd, onError) {
+    const source = resolveRecordedAudio(_audioMaps[_accent], text);
+    if (!source) return false;
+
+    const audio = new Audio(source);
+    let failed = false;
+    const fallback = () => {
+      if (failed) return;
+      failed = true;
+      _currentAudio = null;
+      _speak(sanitiseText(text), onStart, onEnd, onError);
+    };
+    audio.playbackRate = _rate;
+    audio.addEventListener('play', () => onStart && onStart('kokoro'), { once: true });
+    audio.addEventListener('ended', () => {
+      _currentAudio = null;
+      onEnd && onEnd();
+    }, { once: true });
+    audio.addEventListener('error', fallback, { once: true });
+    _currentAudio = audio;
+    audio.play().catch(fallback);
+    return true;
   }
 
   /**
@@ -83,13 +121,13 @@ export const AudioEngine = (() => {
 
     const utterance  = new SpeechSynthesisUtterance(text);
     utterance.lang   = 'en-US';
-    utterance.rate   = 0.9;   /* Levemente mais lento — mais claro para aprendizes */
+    utterance.rate   = _rate;
     utterance.pitch  = 1.0;
 
     const voice = _pickVoice();
     if (voice) utterance.voice = voice;
 
-    utterance.onstart = () => onStart && onStart();
+    utterance.onstart = () => onStart && onStart('browser');
 
     utterance.onend = () => {
       _currentUtterance = null;
@@ -106,7 +144,6 @@ export const AudioEngine = (() => {
 
     _currentUtterance = utterance;
     window.speechSynthesis.speak(utterance);
-    onStart && onStart();
   }
 
   /* -------------------------------------------------------------------------
@@ -128,6 +165,13 @@ export const AudioEngine = (() => {
           window.speechSynthesis.getVoices();
         });
       }
+      if (typeof fetch === 'function') {
+        Promise.all([
+          fetch('./data/audio-map.json').then((response) => response.ok ? response.json() : {}),
+          fetch('./data/audio-map-gb.json').then((response) => response.ok ? response.json() : {}),
+        ]).then(([us, gb]) => { _audioMaps = { us, gb }; })
+          .catch(() => { _audioMaps = { us: {}, gb: {} }; });
+      }
       return this;
     },
 
@@ -144,6 +188,7 @@ export const AudioEngine = (() => {
       const sanitised = sanitiseText(text);
       if (!sanitised) return;
       _stopAll();
+      if (_speakRecorded(text, onStart, onEnd, onError)) return;
       _speak(sanitised, onStart, onEnd, onError);
     },
 
@@ -152,9 +197,26 @@ export const AudioEngine = (() => {
       _stopAll();
     },
 
+    /** Ajusta a velocidade entre 0,65x e 1,25x. */
+    setRate(rate) {
+      const value = Number(rate);
+      _rate = Number.isFinite(value) ? Math.min(1.25, Math.max(0.65, value)) : 0.9;
+      return _rate;
+    },
+
+    get rate() { return _rate; },
+
+    setAccent(accent) {
+      _accent = accent === 'gb' ? 'gb' : 'us';
+      return _accent;
+    },
+
+    get accent() { return _accent; },
+
     /** Indica se há áudio sendo reproduzido no momento. */
     get isPlaying() {
-      return _currentUtterance !== null && window.speechSynthesis?.speaking === true;
+      return (_currentAudio !== null && !_currentAudio.paused) ||
+        (_currentUtterance !== null && window.speechSynthesis?.speaking === true);
     },
 
     /**
@@ -176,6 +238,8 @@ export const AudioEngine = (() => {
     hydrateAudioButtons({ levelId, moduleId, lessonId, state, onPlayed } = {}) {
       const appRoot = document.getElementById('app-root');
       if (!appRoot) return;
+      AudioEngine.setRate(state?.getAudioRate?.() ?? 0.9);
+      AudioEngine.setAccent(state?.getAudioAccent?.() ?? 'us');
 
       function _setStatus(btn, text, modifier) {
         const row      = btn.closest('[class*="-row"], [class*="-side"], .audio-player');
@@ -221,10 +285,15 @@ export const AudioEngine = (() => {
         const text = btn.getAttribute('data-text');
         btn.classList.add('playing');
         btn.setAttribute('aria-pressed', 'true');
-        _setStatus(btn, 'Reproduzindo…', 'audio-status--playing');
+        _setStatus(btn, 'Preparando áudio…', 'audio-status--playing');
         activeBtn = btn;
 
         AudioEngine.speak(text, {
+          onStart: (source) => {
+            const accent = AudioEngine.accent === 'gb' ? 'britânico' : 'americano';
+            const label = source === 'kokoro' ? `Kokoro ${accent}` : 'Voz do navegador';
+            _setStatus(btn, `Reproduzindo — ${label}`, 'audio-status--playing');
+          },
           onEnd: () => {
             _resetButton(btn);
             if (activeBtn === btn) activeBtn = null;

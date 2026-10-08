@@ -54,16 +54,16 @@ export const LessonPlanEngine = (() => {
     c1: [
       'Usar inversão formal com adverbiais negativos (Never have I / Not until)',
       'Produzir cleft sentences para ênfase e foco informacional',
-      'Escrever com densidade académica (nominalização, hedging epistémico)',
+      'Escrever com densidade acadêmica (nominalização, hedging epistêmico)',
       'Identificar e produzir dispositivos retóricos (anáfora, antítese, tricólon)',
-      'Controlar o registo conscientemente em função do contexto',
-      'Argumentar com precisão e sofisticação em discussão académica',
+      'Controlar o registro conscientemente em função do contexto',
+      'Argumentar com precisão e sofisticação em discussão acadêmica',
     ],
     c2: [
       'Usar construções absolutas e vocabulário arcaico/literário produtivamente',
       'Analisar o funcionamento ideológico da linguagem (CDA)',
-      'Produzir texto em qualquer género convencional (op-ed, executive brief, obituário)',
-      'Identificar e produzir metáforas conceptuais e extended metaphors',
+      'Produzir texto em qualquer gênero convencional (op-ed, executive brief, obituário)',
+      'Identificar e produzir metáforas conceituais e extended metaphors',
       'Controlar density lexical e register blending deliberadamente',
       'Distinguir e usar vocabulário raro com precisão (tendentious, specious, apposite)',
     ],
@@ -104,20 +104,20 @@ export const LessonPlanEngine = (() => {
       'Apresentação oral: 3 minutos sobre tema abstrato',
     ],
     c1: [
-      'Produção de parágrafo académico com nominalização e hedging',
+      'Produção de parágrafo acadêmico com nominalização e hedging',
       'Análise retórica: identificar dispositivos em texto autêntico',
       'Debate com regra de hedging obrigatório por argumento',
-      'Escrita: reformular parágrafo informal em registo académico',
+      'Escrita: reformular parágrafo informal em registro acadêmico',
       'Atividade de word formation: cadeias derivacionais',
-      'Shadowing de discurso académico (TED Talk / lecture extract)',
+      'Shadowing de discurso acadêmico (TED Talk / lecture extract)',
     ],
     c2: [
       'Análise CDA de texto jornalístico ou político',
-      'Produção de género textual específico (op-ed, manifesto, executive brief)',
-      'Discussão: metáforas conceptuais em discurso público',
+      'Produção de gênero textual específico (op-ed, manifesto, executive brief)',
+      'Discussão: metáforas conceituais em discurso público',
       'Exercício de style mimicry: identificar e replicar estilo de um autor',
       'Debate filosófico com vocabulário raro (tendentious, specious, apposite)',
-      'Análise de densidade lexical em texto académico vs jornalístico',
+      'Análise de densidade lexical em texto acadêmico vs jornalístico',
     ],
   };
 
@@ -129,14 +129,14 @@ export const LessonPlanEngine = (() => {
     'Dispositivos individuais (tablet/computador)',
     'Áudio / Web Speech API',
     'Dicionário monolíngue em inglês',
-    'Vídeo / excerto de podcast',
+    'Vídeo / trecho de podcast',
     'Cartões de vocabulário (flash cards)',
   ];
 
   /* ── Dados: Avaliação (fixos) ─────────────────────────────────────── */
   const AVALIACOES = [
     'Observação de participação oral',
-    'Correcção de exercícios escritos',
+    'Correção de exercícios escritos',
     'Autoavaliação após atividade de produção',
     'Role-play / diálogo avaliado',
     'Entrega escrita (parágrafo / ensaio)',
@@ -283,7 +283,7 @@ export const LessonPlanEngine = (() => {
   }
 
   /* ── Hidratação: expõe funções globais + inicializa ─────────────── */
-  function hydrate() {
+  async function hydrate({ state, params = [] } = {}) {
     /* Expor ao escopo global para os event handlers inline do HTML */
     window._planGerar     = gerar;
     window._planOnNivel   = onNivel;
@@ -299,6 +299,20 @@ export const LessonPlanEngine = (() => {
     /* Renderiza checkboxes fixos (recursos e avaliação) */
     _renderChecks('box-rec', RECURSOS,   'rec');
     _renderChecks('box-ava', AVALIACOES, 'ava');
+
+    const [levelId, moduleId, lessonId] = params;
+    if (state && levelId && moduleId && lessonId) {
+      const lesson = await state.getLessonAsync(levelId, moduleId, lessonId);
+      const level = document.getElementById('pf-nivel');
+      const theme = document.getElementById('pf-tema');
+      if (lesson && level && theme) {
+        level.value = levelId;
+        theme.value = lesson.title;
+        onNivel();
+        document.querySelector('.plan-form-panel')?.insertAdjacentHTML('afterbegin',
+          `<div class="notice notice--success plan-source">Plano iniciado pela lição selecionada. <a href="#/lesson/${_esc(levelId)}/${_esc(moduleId)}/${_esc(lessonId)}">Voltar à lição</a></div>`);
+      }
+    }
   }
 
   return { hydrate };

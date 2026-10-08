@@ -2,22 +2,27 @@
 
 ## Overview
 
-The audio system uses the **Web Speech API** exclusively — a browser-native API requiring zero dependencies, zero server infrastructure, and fully compatible with GitHub Pages and any static hosting.
+The audio system prefers American (`af_heart`) or British (`bf_isabella`)
+static recordings generated with **Kokoro-82M** and
+uses the **Web Speech API** as a fallback. Kokoro is a content-generation tool,
+not a runtime dependency: GitHub Pages serves ordinary audio files.
 
 ## Backend
 
 | Backend | Availability | Quality |
 |---|---|---|
-| Web Speech API | All modern browsers (Chrome, Edge, Safari, Firefox) | Good — adequate for language learning |
+| Kokoro recording | When the phrase exists in `data/audio-map.json` | Consistent and natural |
+| Web Speech API | Modern browsers | Device-dependent fallback |
 
-If the browser does not support the Web Speech API, the UI displays "Áudio indisponível" gracefully — no exceptions thrown.
+If a recording is absent, the browser voice is used. If neither option is
+available, the UI displays "Áudio indisponível" without breaking the lesson.
 
 ## Architecture
 
 ```
 AudioEngine (audio-engine.js)
-  ├── init()                 — preloads voice list (Chrome async issue)
-  ├── speak(text, callbacks) — sanitise → pick voice → SpeechSynthesisUtterance
+  ├── init()                 — loads audio map and browser voices
+  ├── speak(text, callbacks) — static recording → browser voice fallback
   ├── stop()                 — cancel current utterance
   ├── isPlaying (getter)
   └── hydrateAudioButtons()  — event delegation for .btn--audio[data-text]
@@ -25,7 +30,7 @@ AudioEngine (audio-engine.js)
 
 ## Voice Selection
 
-`_pickVoice()` selects in priority order:
+When a static recording is unavailable, `_pickVoice()` selects in priority order:
 
 1. `en-US` local voice
 2. Any `en-US` voice
@@ -55,6 +60,23 @@ String(text)
 ## Event Delegation
 
 `hydrateAudioButtons()` registers a single `click` listener on `#app-root`, matching `.btn--audio[data-text]` elements. The previous handler is removed before registering a new one, ensuring the lesson context (levelId/moduleId/lessonId) is always current.
+
+## Generating Kokoro recordings
+
+Kokoro generation requires a separate Python environment and never runs in the
+published application. Install `kokoro-onnx` and `soundfile`, download
+`kokoro-v1.0.onnx` and `voices-v1.0.bin`, and point `KOKORO_MODEL_DIR` to their
+directory. Generate one lesson or the complete curriculum:
+
+```bash
+python tools/generate-kokoro-audio.py a1 m01 l02
+python tools/generate-kokoro-audio.py --all
+python tools/generate-kokoro-audio.py --all --voice bf_isabella --accent gb --workers 2
+```
+
+The command writes compressed MP3 files to `assets/audio/kokoro/` and updates
+`data/audio-map.json` or `data/audio-map-gb.json`. Audio files are cached only
+after use; they are not part of the initial PWA shell download.
 
 ## Error Handling
 

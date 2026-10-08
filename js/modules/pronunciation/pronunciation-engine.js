@@ -23,7 +23,10 @@ export const PronunciationEngine = (() => {
 
     _mountShadowing(levelId, moduleId, lessonId, state);
     RhetoricEngine.hydrate({ levelId, moduleId, lessonId, state });
-    _hydrateSectionNav();
+    _hydrateSectionNav(params?.[3]);
+    import('../../study-tools.js')
+      .then(({ StudyTools }) => StudyTools.hydrate({ levelId, moduleId, lessonId, state }))
+      .catch(() => {});
   }
 
   function _mountShadowing(levelId, moduleId, lessonId, state) {
@@ -48,7 +51,7 @@ export const PronunciationEngine = (() => {
     });
   }
 
-  function _hydrateSectionNav() {
+  function _hydrateSectionNav(requestedSection) {
     const navItems = document.querySelectorAll('.lesson-nav-item');
     const sections = document.querySelectorAll('.lesson-section');
     if (!navItems.length || !sections.length) return;
@@ -78,7 +81,18 @@ export const PronunciationEngine = (() => {
       });
     });
 
-    if (sections[0]) showSection(sections[0].id);
+    document.querySelector('.lesson-nav')?.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      const current = [...navItems].findIndex((item) => item.classList.contains('active'));
+      const offset = event.key === 'ArrowRight' ? 1 : -1;
+      const target = navItems[(current + offset + navItems.length) % navItems.length];
+      target.click();
+      target.focus();
+    });
+
+    const requested = requestedSection && [...sections].find((section) =>
+      section.id === requestedSection || section.id === `pron-${requestedSection}`);
+    if (requested || sections[0]) showSection((requested || sections[0]).id);
   }
 
   return { hydrate };

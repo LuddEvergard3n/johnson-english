@@ -2,7 +2,7 @@
  * teacher-guide-view.js — Guia do Professor
  * Johnson English — Laboratório de Língua
  *
- * Página com sidebar de navegação por âncoras e cartões de actividades práticas.
+ * Página com sidebar de navegação por âncoras e cartões de atividades práticas.
  * Layout: sidebar fixa (260px) + conteúdo longo.
  * Sem hidratação para o conteúdo — mas o índice lateral precisa de JS: os
  * links usam fragmentos simples ("#trivium") que, se deixados para o
@@ -48,11 +48,11 @@ export const TeacherGuideView = (() => {
           <!-- 1. O que é -->
           <div class="guide-section" id="o-que-e">
             <h2>O que é o Johnson English?</h2>
-            <p>O Johnson English é um laboratório académico de língua inglesa construído sobre
+            <p>O Johnson English é um laboratório acadêmico de língua inglesa construído sobre
             o método clássico do Trivium. Não é um jogo de vocabulário, não é um sistema
             de pontos, não é um substituto para a sala de aula. É uma plataforma de prática
             estruturada que complementa o ensino presencial — especialmente útil quando o
-            professor precisa de actividades com progressão pedagógica clara e rastreável.</p>
+            professor precisa de atividades com progressão pedagógica clara e rastreável.</p>
             <p>O currículo cobre os seis níveis CEFR (A1 a C2), com 55 módulos e 209 lições.
             Cada lição segue o mesmo padrão de três etapas: Gramática (absorção), Lógica
             (estrutura) e Retórica (produção).</p>

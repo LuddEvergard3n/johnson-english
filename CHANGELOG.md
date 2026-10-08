@@ -6,6 +6,37 @@ Versões mais recentes primeiro.
 
 ---
 
+## [Unreleased]
+
+### Adicionado
+
+- Áudio Kokoro estático para todas as 2.578 falas únicas do currículo, com fallback para Web Speech API.
+- Seletor persistente entre sotaque americano (`af_heart`) e britânico (`bf_isabella`).
+- Gerador reproduzível por lição ou currículo completo e mapa `data/audio-map.json`.
+- Cache offline sob demanda para os áudios gerados.
+
+---
+
+## [3.0.0] — 2026-10-08
+
+### Adicionado
+
+- Nova página inicial acadêmica contemporânea com retomada, progresso e busca.
+- Busca local no currículo, percentuais por nível/módulo/lição e última lição.
+- Velocidade de voz, compartilhamento, navegação sequencial e links por seção.
+- Gravação efêmera com `MediaRecorder`, sem upload ou persistência.
+- Plano de aula iniciado diretamente por uma lição.
+- PWA instalável com currículo disponível offline após a primeira visita.
+
+### Corrigido
+
+- Exercício truncado `c1/m53/l02`, terminologia pt-BR e textos desatualizados.
+- Testes gerais de reordenação, busca, progresso, gravação e shell offline.
+
+### Validação
+
+- 1223 testes automatizados, checagem de sintaxe e navegação em desktop/celular.
+
 ## [2.0.1] — 2026-07-24 (3ª rodada — infraestrutura de testes)
 
 ### Corrigido

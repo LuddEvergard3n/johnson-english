@@ -37,11 +37,13 @@ export const ModuleView = (() => {
       </div>`;
     }
 
-    const cardsHtml = modules.map((mod) => `
+    const summaries = await Promise.all(modules.map((mod) => state.getProgressSummary(levelId, mod.id)));
+    const cardsHtml = modules.map((mod, index) => `
       <a href="#/module/${_escape(levelId)}/${_escape(mod.id)}" class="card">
         <span class="level-badge">${_escape(levelId.toUpperCase())}</span>
         <h3 class="card-title">${_escape(mod.title)}</h3>
         <p class="card-description">${_escape(mod.description)}</p>
+        <div class="card-progress"><span style="width:${summaries[index].percent}%"></span></div><small>${summaries[index].percent}% concluído</small>
       </a>`).join('');
 
     return `
@@ -68,12 +70,16 @@ export const ModuleView = (() => {
       </div>`;
     }
 
-    const cardsHtml = lessons.map((lesson, i) => `
+    const cardsHtml = lessons.map((lesson, i) => {
+      const percent = state.getLessonProgress(levelId, moduleId, lesson.id, lesson);
+      return `
       <a href="#/lesson/${_escape(levelId)}/${_escape(moduleId)}/${_escape(lesson.id)}" class="card">
         <span class="card-eyebrow">Lição ${i + 1}</span>
         <h3 class="card-title">${_escape(lesson.title)}</h3>
         <p class="card-description">${_escape(lesson.description)}</p>
-      </a>`).join('');
+        <div class="card-progress"><span style="width:${percent}%"></span></div><small>${percent}% concluído</small>
+      </a>`;
+    }).join('');
 
     return `
       <div class="page-container">

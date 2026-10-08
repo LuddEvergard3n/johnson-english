@@ -29,6 +29,7 @@ import { PronunciationLessonView } from './components/pronunciation-lesson-view.
 import { AboutView }        from './components/about-view.js';
 import { TeacherGuideView } from './components/teacher-guide-view.js';
 import { LessonPlanView }   from './components/lesson-plan-view.js';
+import { SearchView }       from './components/search-view.js';
 import { NotFoundView } from './components/not-found-view.js';
 import { escapeAttr as _escape } from './utils/html-safety.js';
 
@@ -68,6 +69,7 @@ export const Router = (() => {
     'about':  AboutView.render,
     'guia':   TeacherGuideView.render,
     'plano':  LessonPlanView.render,
+    'buscar': SearchView.render,
   };
 
   /**
@@ -222,6 +224,7 @@ export const Router = (() => {
         const { LessonEngine } = await import('./lesson-engine.js');
         LessonEngine.hydrate({ params, state, audio });
       }
+      state.setLastLesson(levelId, moduleId, lessonId);
     }
     if (route === '' || route === 'home') {
       HomeView.hydrate({ state, audio });
@@ -229,9 +232,15 @@ export const Router = (() => {
     if (route === 'guia') {
       TeacherGuideView.hydrate();
     }
+    if (route === 'levels') {
+      LevelsView.hydrate({ state });
+    }
     if (route === 'plano') {
       const { LessonPlanEngine } = await import('./modules/lesson-plan/lesson-plan-engine.js');
-      LessonPlanEngine.hydrate();
+      LessonPlanEngine.hydrate({ state, params });
+    }
+    if (route === 'buscar') {
+      SearchView.hydrate();
     }
   }
 

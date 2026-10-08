@@ -1,0 +1,13 @@
+{
+  "name": "Johnson English — Laboratório de Língua",
+  "short_name": "Johnson English",
+  "description": "Curso público de inglês do A1 ao C2 com escuta, prática e produção.",
+  "start_url": "./#/",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f3ed",
+  "theme_color": "#17324d",
+  "icons": [
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

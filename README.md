@@ -25,7 +25,11 @@ The curriculum progresses from daily communication and pronunciation to academic
 ## Features
 
 - Grammar, logic, rhetoric, pronunciation, and practical-language modules.
-- Native Web Speech API integration with a silent fallback.
+- Pre-generated American and British Kokoro audio with a persistent accent selector and native Web Speech API fallback.
+- Local curriculum search and visible progress from A1 to C2.
+- In-browser voice recording for private pronunciation comparison.
+- Shareable lesson links, adjustable speech speed, and sequential navigation.
+- Installable PWA with offline access after the first visit.
 - Progressive immersion: bilingual support through B2 and full English from C1.
 - Browser-based lessons with no application server.
 - Deterministic Node.js test runner with no test framework dependency.
@@ -34,11 +38,21 @@ The curriculum progresses from daily communication and pronunciation to academic
 
 Native ES modules require an HTTP server:
 
-```bash
-python3 -m http.server 8080
+On Windows, double-click:
+
+```text
+abrir-johnson.cmd
 ```
 
-Open `http://localhost:8080`.
+Or run on any platform with Node.js:
+
+```bash
+node server/local-server.js
+```
+
+Open `http://127.0.0.1:4175`. Opening `index.html` directly with a `file://`
+URL does not work because browsers block ES modules and curriculum requests in
+that mode.
 
 ## Tests
 
@@ -54,7 +68,11 @@ css/                   Base, layout, and mobile styles
 js/                    Router, state, lesson and audio engines
 data/                  Levels, modules, and lessons
 tests/test-runner.js   Dependency-free checks
+manifest.webmanifest  Installation metadata
+sw.js                  Versioned offline cache
 docs/                  Architecture, pedagogy, audio, and development notes
+server/local-server.js Dependency-free local HTTP server
+abrir-johnson.cmd      Two-click Windows launcher
 ```
 
 ## Design decisions
@@ -63,6 +81,8 @@ docs/                  Architecture, pedagogy, audio, and development notes
 - Curriculum data is separated from presentation and lesson engines.
 - C1 and C2 intentionally remove Portuguese scaffolding.
 - Speech features degrade safely when a browser does not support them.
+- Progress and audio preferences remain on the current device; recordings are never persisted or uploaded.
+- Kokoro runs only during content preparation; students never download the model.
 
 ## Live version
 

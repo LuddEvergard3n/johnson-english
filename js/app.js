@@ -92,6 +92,15 @@ window.addEventListener('load', () => {
       'warning'
     );
   }
+  if ('serviceWorker' in navigator) {
+    let reloadingForUpdate = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (reloadingForUpdate) return;
+      reloadingForUpdate = true;
+      window.location.reload();
+    });
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
 });
 
 /* Expõe módulos na janela para inspeção em desenvolvimento */

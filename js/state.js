@@ -17,6 +17,49 @@
  */
 
 const STORAGE_KEY = 'je_progress';
+const META_KEY = 'je_meta';
+
+/**
+ * Calcula o percentual concluído sem depender do DOM ou do armazenamento.
+ *
+ * @param {string[]} completedActivities
+ * @param {string[]} availableActivities
+ * @returns {number}
+ */
+export function calculateProgress(completedActivities = [], availableActivities = []) {
+  if (!availableActivities.length) return 0;
+  const completed = new Set(completedActivities);
+  return Math.round((availableActivities.filter((item) => completed.has(item)).length / availableActivities.length) * 100);
+}
+
+/**
+ * Busca simples e determinística no catálogo já carregado.
+ *
+ * @param {Array} lessons
+ * @param {Array} modules
+ * @param {string} query
+ * @returns {Array}
+ */
+export function searchCatalog(lessons = [], modules = [], query = '') {
+  const terms = String(query).trim().toLocaleLowerCase('pt-BR').split(/\s+/).filter(Boolean);
+  if (!terms.length) return [];
+  const moduleById = new Map(modules.map((item) => [`${item.levelId}/${item.id}`, item]));
+  return lessons.filter((lesson) => {
+    const module = moduleById.get(`${lesson.levelId}/${lesson.moduleId}`);
+    const haystack = [lesson.levelId, lesson.title, lesson.description, module?.title, module?.description]
+      .filter(Boolean).join(' ').toLocaleLowerCase('pt-BR');
+    return terms.every((term) => haystack.includes(term));
+  });
+}
+
+/** Normaliza preferências antigas ou corrompidas sem perder compatibilidade. */
+export function normaliseMeta(stored = {}) {
+  return {
+    lastLesson: typeof stored.lastLesson === 'string' ? stored.lastLesson : null,
+    audioRate: Number.isFinite(stored.audioRate) ? Math.min(1.25, Math.max(0.65, stored.audioRate)) : 0.9,
+    audioAccent: stored.audioAccent === 'gb' ? 'gb' : 'us',
+  };
+}
 
 export const State = (() => {
   /* -------------------------------------------------------------------------
@@ -30,6 +73,7 @@ export const State = (() => {
 
   /** Progress map: lessonKey → { completedActivities: string[] } */
   let _progress = {};
+  let _meta = { lastLesson: null, audioRate: 0.9, audioAccent: 'us' };
 
   /* -------------------------------------------------------------------------
      DATA LOADING
@@ -82,6 +126,13 @@ export const State = (() => {
       /* If localStorage is unavailable (private mode, etc.), use empty state */
       _progress = {};
     }
+    try {
+      const raw = localStorage.getItem(META_KEY);
+      const stored = raw ? JSON.parse(raw) : {};
+      _meta = normaliseMeta(stored);
+    } catch (_err) {
+      _meta = { lastLesson: null, audioRate: 0.9, audioAccent: 'us' };
+    }
   }
 
   /** Persist current progress to localStorage. */
@@ -90,6 +141,14 @@ export const State = (() => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(_progress));
     } catch (_err) {
       /* Silently ignore — progress is still available in memory this session */
+    }
+  }
+
+  function _saveMeta() {
+    try {
+      localStorage.setItem(META_KEY, JSON.stringify(_meta));
+    } catch (_err) {
+      /* Preferências continuam disponíveis durante a sessão. */
     }
   }
 
@@ -205,6 +264,18 @@ export const State = (() => {
       return this.getLesson(levelId, moduleId, lessonId);
     },
 
+    /** Retorna todo o catálogo para busca e navegação sequencial. */
+    async getAllLessons() {
+      await _ensureDataLoaded();
+      return _lessons;
+    },
+
+    /** Busca por nível, módulo, título, descrição e tema. */
+    async search(query) {
+      await _ensureDataLoaded();
+      return searchCatalog(_lessons, _modules, query);
+    },
+
     /* -----------------------------------------------------------------------
        PROGRESS TRACKING
        ----------------------------------------------------------------------- */
@@ -269,12 +340,74 @@ export const State = (() => {
       return data ? [...data.completedActivities] : [];
     },
 
+    /** Retorna as atividades que podem gerar conclusão para uma lição. */
+    getAvailableActivities(lesson) {
+      if (!lesson) return [];
+      const activities = [];
+      if ((lesson.listening || []).length) activities.push('listening');
+      if ((lesson.repetition || []).length) activities.push('repetition');
+      if ((lesson.practice || []).length) activities.push('practice');
+      if ((lesson.production || []).length) activities.push('production');
+      return activities;
+    },
+
+    getLessonProgress(levelId, moduleId, lessonId, lesson = null) {
+      const resolved = lesson || this.getLesson(levelId, moduleId, lessonId);
+      return calculateProgress(
+        this.getCompletedActivities(levelId, moduleId, lessonId),
+        this.getAvailableActivities(resolved)
+      );
+    },
+
+    async getProgressSummary(levelId = null, moduleId = null) {
+      await _ensureDataLoaded();
+      const lessons = _lessons.filter((lesson) =>
+        (!levelId || lesson.levelId === levelId.toLowerCase()) &&
+        (!moduleId || lesson.moduleId === moduleId.toLowerCase())
+      );
+      const total = lessons.reduce((sum, lesson) =>
+        sum + this.getLessonProgress(lesson.levelId, lesson.moduleId, lesson.id, lesson), 0);
+      return { percent: lessons.length ? Math.round(total / lessons.length) : 0, lessons: lessons.length };
+    },
+
+    setLastLesson(levelId, moduleId, lessonId) {
+      _meta.lastLesson = this.lessonKey(levelId, moduleId, lessonId);
+      _saveMeta();
+    },
+
+    getLastLesson() {
+      return _meta.lastLesson;
+    },
+
+    setAudioRate(rate) {
+      const value = Number(rate);
+      _meta.audioRate = Number.isFinite(value) ? Math.min(1.25, Math.max(0.65, value)) : 0.9;
+      _saveMeta();
+      return _meta.audioRate;
+    },
+
+    getAudioRate() {
+      return _meta.audioRate;
+    },
+
+    setAudioAccent(accent) {
+      _meta.audioAccent = accent === 'gb' ? 'gb' : 'us';
+      _saveMeta();
+      return _meta.audioAccent;
+    },
+
+    getAudioAccent() {
+      return _meta.audioAccent;
+    },
+
     /**
      * Reset all stored progress. Useful for testing.
      */
     resetProgress() {
       _progress = {};
+      _meta.lastLesson = null;
       _saveProgress();
+      _saveMeta();
     },
   };
 })();

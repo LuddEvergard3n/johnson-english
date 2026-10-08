@@ -29,7 +29,7 @@
     height: auto;
     border-right: none;
     border-bottom: var(--border-width) solid var(--color-border);
-    padding: 0;
+    padding: var(--space-3) var(--space-4);
     overflow-y: visible;
     overflow-x: auto;
     /* Prevent sidebar from growing too tall */
@@ -42,20 +42,20 @@
   .lesson-nav {
     display: flex;
     flex-direction: row;
+    gap: var(--space-2);
     min-width: max-content;
   }
 
   .lesson-nav-item {
-    border-left: none;
-    border-bottom: 3px solid transparent;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius);
     padding: var(--space-3) var(--space-4);
     white-space: nowrap;
     flex-shrink: 0;
   }
 
   .lesson-nav-item.active {
-    border-left-color: transparent;
-    border-bottom-color: var(--color-accent);
+    border-color: var(--color-accent);
     background-color: var(--color-accent-bg);
   }
 
@@ -64,6 +64,24 @@
     padding: var(--space-5) var(--space-4);
     min-height: auto;
   }
+}
+
+/* Johnson English 3.0 */
+@media (max-width: 860px) {
+  .home-hero-grid, .search-callout, .home-note { grid-template-columns: 1fr; }
+  .level-strip { grid-template-columns: repeat(3, 1fr); }
+  .search-callout { padding: var(--space-6); }
+  .lesson-tools { align-items: stretch; }
+}
+
+@media (max-width: 560px) {
+  .hero--home .hero-title { font-size: var(--text-3xl); }
+  .hero-actions, .search-field-row, .catalog-search, .progress-actions, .lesson-tools { flex-direction: column; align-items: stretch; }
+  .level-strip { grid-template-columns: 1fr; }
+  .level-strip a { grid-template-columns: 3rem 1fr; align-items: center; }
+  .recording-panel { grid-template-columns: 1fr; }
+  .recording-actions { align-items: stretch; flex-direction: column; }
+  .lesson-sequence .btn { padding-inline: var(--space-3); }
 }
 
 /* =============================================================================

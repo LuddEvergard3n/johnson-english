@@ -268,6 +268,23 @@ async function run({ describe, it, assert }) {
           });
       });
     });
+
+    it('reorder word banks build exactly the declared answer', () => {
+      const tokens = (text) => text.trim().toLocaleLowerCase('en-US').split(/\s+/).sort();
+      lessons.forEach((lesson) => {
+        (lesson.practice || []).filter((ex) => ex.type === 'reorder').forEach((ex, i) => {
+          assert.deepEqual(
+            tokens(ex.words.join(' ')), tokens(ex.answer),
+            `${lesson.levelId}/${lesson.moduleId}/${lesson.id} reorder[${i}] word bank differs from answer`
+          );
+        });
+      });
+    });
+
+    it('every lesson key is unique', () => {
+      const keys = lessons.map((lesson) => `${lesson.levelId}/${lesson.moduleId}/${lesson.id}`);
+      assert.equal(new Set(keys).size, keys.length, 'Duplicate lesson key found');
+    });
   });
 
   /* Lições de pronúncia — estrutura especial (function hoisting permite chamar antes da definição) */

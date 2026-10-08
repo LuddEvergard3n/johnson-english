@@ -257,7 +257,7 @@ Se um arquivo se aproximar desse limite, divida por responsabilidade.
 1. Faça push do repositório para o GitHub.
 2. Configurações do repositório → Pages → Source: branch `main`, raiz `/`.
 3. O GitHub Pages servirá `index.html` da raiz do repositório.
-4. Áudio funciona nativamente via Web Speech API do browser — nenhuma configuração adicional necessária.
+4. O áudio Kokoro publicado funciona sem configuração; frases ainda não gravadas usam a Web Speech API do navegador.
 
 ---
 

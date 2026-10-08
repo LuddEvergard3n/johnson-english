@@ -6,7 +6,8 @@ Johnson English é uma aplicação web de página única (SPA) hospedada no GitH
 Construída com HTML5 puro, CSS3 e ES Modules — sem ferramentas de build,
 sem frameworks, sem transpilação.
 
-O áudio usa a **Web Speech API** nativa do browser — zero dependências, zero servidor.
+O áudio prefere gravações Kokoro estáticas e usa a **Web Speech API** nativa do
+browser como fallback — zero dependências em tempo de execução, zero servidor.
 
 ---
 
@@ -27,17 +28,19 @@ johnson-english/
 │   ├── router.js               Roteador SPA baseado em hash
 │   ├── state.js                Carregamento de dados, rastreamento de progresso
 │   ├── lesson-engine.js        Hidratação pós-renderização das lições normais
-│   ├── audio-engine.js         TTS via Web Speech API
+│   ├── audio-engine.js         Áudio Kokoro com fallback Web Speech API
 │   ├── shadowing-engine.js     Controlador do modo shadowing
+│   ├── study-tools.js          Gravação local, compartilhamento e navegação
 │   │
 │   ├── components/
 │   │   ├── home-view.js
+│   │   ├── search-view.js             Busca local no currículo
 │   │   ├── levels-view.js
 │   │   ├── module-view.js
 │   │   ├── lesson-view.js             Renderizador de lições normais
 │   │   ├── pronunciation-lesson-view.js  Renderizador de lições de pronúncia
 │   │   ├── about-view.js              Página Sobre (métricas, método, ecossistema)
-│   │   ├── teacher-guide-view.js      Guia do Professor (sidebar + actividades)
+│   │   ├── teacher-guide-view.js      Guia do Professor (sidebar + atividades)
 │   │   ├── lesson-plan-view.js        Gerador de Plano de Aula (HTML/layout)
 │   │   ├── not-found-view.js
 │   │   └── feedback-engine.js         Helper de UI para feedback de exercícios
@@ -52,7 +55,7 @@ johnson-english/
 │   │   ├── pronunciation/
 │   │   │   └── pronunciation-engine.js  Lições de pronúncia (type: "pronunciation")
 │   │   └── lesson-plan/
-│   │       └── lesson-plan-engine.js  Interactividade do Gerador de Plano de Aula
+│   │       └── lesson-plan-engine.js  Interatividade do Gerador de Plano de Aula
 │   │
 │   └── utils/
 │       └── html-safety.js     escapeHtml / escapeAttr — fonte única de escape HTML
@@ -189,10 +192,19 @@ AudioEngine.hydrateAudioButtons({ levelId, moduleId, lessonId, state });
 | `#/lesson/a1/m01/l01` | Lição A1/M01/L01 |
 | `#/guia` | Guia do Professor |
 | `#/plano` | Gerador de Plano de Aula |
+| `#/plano/a1/m01/l01` | Plano iniciado a partir de uma lição |
+| `#/buscar/present%20perfect` | Busca local no currículo |
 | `#/about` | Sobre |
 
 Roteamento por hash é utilizado em vez da History API porque o GitHub Pages
 não suporta redirecionamento server-side sem configuração adicional.
+
+## Estado local e modo offline
+
+- `je_progress` mantém compatibilidade com o progresso existente por atividade.
+- `je_meta` armazena somente a última lição e a velocidade de áudio preferida.
+- Gravações usam `MediaRecorder` e URLs de objeto temporárias; não são persistidas.
+- `sw.js` mantém um cache versionado do shell e do currículo para uso offline.
 
 ---
 
@@ -252,8 +264,8 @@ não suporta redirecionamento server-side sem configuração adicional.
   `escapeAttr()` (`js/utils/html-safety.js`) antes de inserção como `innerHTML`.
   Sem uso de `textContent` puro apenas onde formatação é necessária.
 - **TTS**: texto sanitizado via regex `[^\w\s.,!?'"();:\-]` + limite de 500 chars
-  antes de enviar à Web Speech API. Não há servidor — toda síntese de voz é
-  local ao navegador.
+  antes de consultar o mapa de gravações ou usar a Web Speech API. Não há
+  servidor; os arquivos Kokoro são estáticos e o fallback vem do navegador.
 - **CSP**: definida via `<meta>` em `index.html`. Scripts restritos a `'self'`.
   `'unsafe-inline'` permitido apenas para estilos (necessário para atributos `style` gerados).
 

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Johnson English</title>
+  <rect width="512" height="512" rx="92" fill="#17324d"/>
+  <path d="M151 112h210v52H282v161c0 58-37 91-96 91-25 0-47-6-66-17l24-48c12 7 24 10 37 10 29 0 45-15 45-43V164h-75z" fill="#f6f3ed"/>
+  <path d="M315 336h78v52h-78z" fill="#c58a45"/>
+</svg>

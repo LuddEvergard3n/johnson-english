@@ -27907,11 +27907,13 @@
           "this",
           "key",
           "important",
+          "causality",
+          "—",
           "—",
           "is",
           "is"
         ],
-        "answer": "The key point here — and this is important — is"
+        "answer": "The key point here — and this is important — is causality"
       }
     ],
     "production": [

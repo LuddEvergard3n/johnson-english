@@ -38,11 +38,11 @@ export const PronunciationLessonView = (() => {
 
     /* Seções da lição de pronúncia — sem "Prática" */
     const sections = [
-      { id: 'pron-sound',      label: 'Som',       icon: '🔊' },
-      { id: 'pron-words',      label: 'Palavras',   icon: '📋' },
-      { id: 'pron-pairs',      label: 'Pares',      icon: '⚖' },
-      { id: 'pron-repetition', label: 'Repetição',  icon: '🗣' },
-      { id: 'pron-production', label: 'Produção',   icon: '✍' },
+      { id: 'pron-sound',      label: 'Som',       icon: 'S' },
+      { id: 'pron-words',      label: 'Palavras',   icon: 'P' },
+      { id: 'pron-pairs',      label: 'Pares',      icon: '≠' },
+      { id: 'pron-repetition', label: 'Repetição',  icon: 'R' },
+      { id: 'pron-production', label: 'Produção',   icon: 'F' },
     ];
 
     const sidebarNav = sections.map((s) => `

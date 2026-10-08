@@ -120,6 +120,7 @@ async function runAll() {
     path.join(__dirname, 'content-tests.js'),
     path.join(__dirname, 'content-tests-a2.js'),
     path.join(__dirname, 'audio-tests.js'),
+    path.join(__dirname, 'platform-tests.js'),
   ];
 
   for (const suitePath of suitePaths) {
